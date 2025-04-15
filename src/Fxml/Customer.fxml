@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<TableView layoutX="8.0" layoutY="90.0" prefHeight="223.0" prefWidth="635.0">
+			<columns>
+				<TableColumn prefWidth="137.3333387374878" text="ID" />
+				<TableColumn prefWidth="361.33335876464844" text="Name" />
+				<TableColumn minWidth="0.0" prefWidth="136.00003051757812" text="Address" />
+			</columns>
+		</TableView>
+		<Button layoutX="59.0" layoutY="503.0" mnemonicParsing="false" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
+		<Button layoutX="204.0" layoutY="503.0" mnemonicParsing="false" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Delete" />
+		<Button layoutX="345.0" layoutY="503.0" mnemonicParsing="false" style="-fx-background-color: #FFC107; -fx-text-fill: black;" text="Edit" />
+		<Button layoutX="481.0" layoutY="503.0" mnemonicParsing="false" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Search" />
+      <AnchorPane layoutY="-1.0" prefHeight="74.0" prefWidth="655.0" style="-fx-background-color: #87CEFA;">
+         <children>
+      		<Text layoutX="243.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER" textAlignment="CENTER">
+      			<font>
+      				<Font name="System Bold" size="36.0" />
+      			</font>
+      		</Text>
+      		<FontAwesomeIcon glyphName="USERS" layoutX="167.0" layoutY="55.0" size="3em" />
+         </children>
+      </AnchorPane>
+	</children>
+</AnchorPane>
