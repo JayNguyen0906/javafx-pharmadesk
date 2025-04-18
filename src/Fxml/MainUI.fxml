@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Text fill="#0926a8" layoutX="154.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PHARMADESKAPP" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="36.0" />
+            </font>
+        </Text>
+        <FontAwesomeIcon fill="#4c70cc" glyphName="USER_MD" layoutX="252.0" layoutY="174.0" size="10em" />
+        
+        <Label layoutX="166.0" layoutY="334.0" text="User" />
+        <TextField layoutX="227.0" layoutY="330.0" prefWidth="200.0" promptText="Enter username" style="-fx-background-color: #DCDCDC;" />
+        
+        <Label layoutX="150.0" layoutY="385.0" text="Password" />
+        <PasswordField layoutX="227.0" layoutY="381.0" prefWidth="200.0" promptText="Enter password" style="-fx-background-color: #DCDCDC;" />
+
+        <Button layoutX="213.0" layoutY="473.0" prefWidth="200.0" style="-fx-background-color: #4c70cc; -fx-text-fill: white; -fx-font-weight: bold;" text="Login" />
+    </children>
+</AnchorPane>
