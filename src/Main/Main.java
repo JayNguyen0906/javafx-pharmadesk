@@ -1,29 +1,35 @@
 package Main;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.io.InputStream;
 
-import DAO.Cus_DAO;
-import DAO.DB_CONECTION;
-import DAO.Good_DAO;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
 
-	public static void main(String[] args) throws SQLException {
-		Connection conn = DB_CONECTION.getConnection();
-		if (conn != null) {
-			System.out.println("Connection database succesfully! ");
-		} else {
-			System.out.println("Connect database failed!");
-		}
-		
-		Cus_DAO cus = new Cus_DAO();
-		System.out.println(cus.getAllCustomer());
-		
-		Good_DAO good = new Good_DAO();
-		System.out.println(good.getAllGood());
-		
-		
-		
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// Load file FXML
+		Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Customer.fxml"));
+
+		// Set title và scene
+		primaryStage.setTitle("Pharma DeskApp");
+		primaryStage.setScene(new Scene(root));
+
+		// Set icon
+		InputStream is = getClass().getResourceAsStream("/MainLogo.png");
+		primaryStage.getIcons().add(new Image(is));
+
+		primaryStage.show();
+
 	}
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+
 }
