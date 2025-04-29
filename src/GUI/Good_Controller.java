@@ -1,7 +1,6 @@
 package GUI;
 
 import BUS.Good_BUS;
-import DAO.Good_DAO;
 import DTO.Good;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,50 +74,66 @@ public class Good_Controller {
     }
 
     private void handleAdd(ActionEvent event) {
-        String id = idField.getText();
-        String name = nameField.getText();
-        double price = Double.parseDouble(priceField.getText());
-        String quantity = quantityField.getText();
+        try {
+            String id = idField.getText();
+            String name = nameField.getText();
+            double price = Double.parseDouble(priceField.getText());
+            String quantity = quantityField.getText();
 
-        if (id.isEmpty() || name.isEmpty() || price <= 0 || quantity.isEmpty()) {
-            System.out.println("Please fill in all fields.");
-            return;
-        }
+            if (id.isEmpty() || name.isEmpty() || price <= 0 || quantity.isEmpty()) {
+                System.out.println("Please fill in all fields.");
+                return;
+            }
 
-        Good newGood = new Good(id, name, price, quantity);
+            Good newGood = new Good(id, name, price, quantity);
 
-        if (goodBUS.addGood(newGood)) {
-            goodList.add(newGood);
-            System.out.println("Product added successfully.");
-        } else {
-            System.out.println("Product already exists or error adding.");
+            if (goodBUS.addGood(newGood)) {
+                goodList.add(newGood);
+                System.out.println("Product added successfully.");
+            } else {
+                System.out.println("Product already exists or error adding.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid price format.");
         }
     }
 
     private void handleDelete(ActionEvent event) {
-        Good selected = tableView.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            if (goodBUS.deleteGood(selected.getId())) {
-                goodList.remove(selected);
-                System.out.println("Product deleted successfully.");
+        try {
+            Good selected = tableView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                if (goodBUS.deleteGood(selected.getId())) {
+                    goodList.remove(selected);
+                    System.out.println("Product deleted successfully.");
+                }
+            } else {
+                System.out.println("Please select a product to delete.");
             }
-        } else {
-            System.out.println("Please select a product to delete.");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     private void handleEdit(ActionEvent event) {
-        Good selected = tableView.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            selected.setName(nameField.getText());
-            selected.setPrice(Double.parseDouble(priceField.getText()));
-            selected.setQuantity(quantityField.getText());
+        try {
+            Good selected = tableView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                selected.setName(nameField.getText());
+                selected.setPrice(Double.parseDouble(priceField.getText()));
+                selected.setQuantity(quantityField.getText());
 
-            goodBUS.updateGood(selected);
-            tableView.refresh();
-            System.out.println("Product updated successfully.");
-        } else {
-            System.out.println("Please select a product to edit.");
+                goodBUS.updateGood(selected);
+                tableView.refresh();
+                System.out.println("Product updated successfully.");
+            } else {
+                System.out.println("Please select a product to edit.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid price format.");
         }
     }
 

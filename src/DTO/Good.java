@@ -1,58 +1,74 @@
 package DTO;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Good {
+    private StringProperty id;
+    private StringProperty name;
+    private DoubleProperty price;
+    private StringProperty quantity;
 
-	private String ID_Good;
-	private String Name_Good;
-	private String Classification_Good;
-	private double Price_Good;
+    // Constructor
+    public Good(String id, String name, double price, String quantity) {
+        this.id = new SimpleStringProperty(id);
+        this.name = new SimpleStringProperty(name);
+        this.price = new SimpleDoubleProperty(price);
+        this.quantity = new SimpleStringProperty(quantity);
+    }
 
-	public Good() {
-	}
+    public Good() {
 
-	public Good(String iD_Good, String name_Good, String classification_Good, double price_Good) {
-		ID_Good = iD_Good;
-		Name_Good = name_Good;
-		Classification_Good = classification_Good;
-		Price_Good = price_Good;
-	}
+    }
 
-	public String getID_Good() {
-		return ID_Good;
-	}
+    // Getter and Setter methods
+    public String getId() {
+        return id.get();
+    }
 
-	public void setID_Good(String iD_Good) {
-		ID_Good = iD_Good;
-	}
+    public void setId(String id) {
+        this.id.set(id);
+    }
 
-	public String getName_Good() {
-		return Name_Good;
-	}
+    public StringProperty idProperty() {
+        return id;
+    }
 
-	public void setName_Good(String name_Good) {
-		Name_Good = name_Good;
-	}
+    public String getName() {
+        return name.get();
+    }
 
-	public String getClassification_Good() {
-		return Classification_Good;
-	}
+    public void setName(String name) {
+        this.name.set(name);
+    }
 
-	public void setClassification_Good(String classification_Good) {
-		Classification_Good = classification_Good;
-	}
+    public StringProperty nameProperty() {
+        return name;
+    }
 
-	public double getPrice_Good() {
-		return Price_Good;
-	}
+    public double getPrice() {
+        return price.get();
+    }
 
-	public void setPrice_Good(double price_Good) {
-		Price_Good = price_Good;
-	}
+    public void setPrice(double price) {
+        this.price.set(price);
+    }
 
-	@Override
-	public String toString() {
-		return "Good [ID_Good=" + ID_Good + ", Name_Good=" + Name_Good + ", Classification_Good=" + Classification_Good
-				+ ", Price_Good=" + Price_Good + "]";
-	}
+    public DoubleProperty priceProperty() {
+        return price;
+    }
 
+    public String getQuantity() {
+        return quantity.get();
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity.set(quantity);
+    }
+
+    public StringProperty quantityProperty() {
+        return quantity;
+    }
 }
