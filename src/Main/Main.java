@@ -14,10 +14,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Load file FXML
-		Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Customer.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Login.fxml"));
 
 		// Set title và scene
-		primaryStage.setTitle("Pharma DeskApp");
+		primaryStage.setTitle("Pharma DeskApp - Đăng nhập");
 		primaryStage.setScene(new Scene(root));
 
 		// Set icon
