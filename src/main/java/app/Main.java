@@ -1,4 +1,4 @@
-package Main;
+package main.java.app;
 
 import java.io.InputStream;
 
@@ -14,14 +14,14 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Load file FXML
-		Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Login.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/Good.fxml"));
 
 		// Set title và scene
 		primaryStage.setTitle("Pharma DeskApp - Đăng nhập");
 		primaryStage.setScene(new Scene(root));
 
 		// Set icon
-		InputStream is = getClass().getResourceAsStream("/MainLogo.png");
+		InputStream is = getClass().getResourceAsStream("/img/MainLogo.png");
 		primaryStage.getIcons().add(new Image(is));
 
 		primaryStage.show();

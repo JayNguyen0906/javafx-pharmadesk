@@ -1,4 +1,4 @@
-package DTO;
+package main.java.DTO;
 
 public class Account {
 	private String Username;

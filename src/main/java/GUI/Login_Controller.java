@@ -1,4 +1,4 @@
-package GUI;
+package main.java.GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +10,11 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import main.java.BUS.Account_BUS;
 import javafx.scene.Node;
-import BUS.Account_BUS;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
-
-import java.sql.SQLException;
 
 public class Login_Controller {
 
@@ -62,21 +60,16 @@ public class Login_Controller {
 				
 
 				Account_BUS accBUS = new Account_BUS();
-                boolean checkLogin = false;
-                try {
-                    checkLogin = accBUS.checkLogin(user, pass);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+				boolean checkLogin = accBUS.checkLogin(user, pass);
 
-                if (user.isEmpty() || pass.isEmpty()) {
+				if (user.isEmpty() || pass.isEmpty()) {
 					showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập đầy đủ thông tin!");
 					return;
 				}
 
 				if (checkLogin) {
 					try {
-						Parent mainView = FXMLLoader.load(getClass().getResource("/fxml/MainGUI.fxml"));
+						Parent mainView = FXMLLoader.load(getClass().getResource("/Fxml/MainGUI.fxml"));
 						Scene mainScene = new Scene(mainView);
 
 						// Lấy stage hiện tại từ button (hoặc bất kỳ node nào)
@@ -107,7 +100,7 @@ public class Login_Controller {
 			}
 			Platform.runLater(() -> {
 				try {
-					Parent registerView = FXMLLoader.load(getClass().getResource("/fxml/Register.fxml"));
+					Parent registerView = FXMLLoader.load(getClass().getResource("/Fxml/Register.fxml"));
 					Scene registerScene = new Scene(registerView);
 
 					Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

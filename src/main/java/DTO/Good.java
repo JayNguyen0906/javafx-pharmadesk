@@ -1,4 +1,4 @@
-package DTO;
+package main.java.DTO;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -11,7 +11,7 @@ public class Good {
     private DoubleProperty price;
     private StringProperty quantity;
 
-    // Constructor có tham số
+    // Constructor
     public Good(String id, String name, double price, String quantity) {
         this.id = new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);
@@ -19,12 +19,8 @@ public class Good {
         this.quantity = new SimpleStringProperty(quantity);
     }
 
-    // Constructor không tham số (khởi tạo các thuộc tính)
     public Good() {
-        this.id = new SimpleStringProperty("");  // Khởi tạo giá trị mặc định
-        this.name = new SimpleStringProperty("");
-        this.price = new SimpleDoubleProperty(0.0);
-        this.quantity = new SimpleStringProperty("");
+
     }
 
     // Getter and Setter methods

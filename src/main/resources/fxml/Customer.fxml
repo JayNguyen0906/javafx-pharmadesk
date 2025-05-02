@@ -10,8 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ProgressIndicator?>
-<AnchorPane prefHeight="600.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Cus_Controller">
+<AnchorPane prefHeight="600.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.GUI.Cus_Controller">
 	<children>
 		<TableView fx:id="tableView" layoutX="8.0" layoutY="90.0" prefHeight="223.0" prefWidth="635.0">
 			<columns>
@@ -21,30 +20,25 @@
 				<TableColumn fx:id="address" prefWidth="200.3332824707031" text="Address" />
 			</columns>
 		</TableView>
+        
 		<Button fx:id="addButton" layoutX="59.0" layoutY="503.0" mnemonicParsing="false" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
 		<Button fx:id="deleteButton" layoutX="204.0" layoutY="503.0" mnemonicParsing="false" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Delete" />
 		<Button fx:id="editButton" layoutX="345.0" layoutY="503.0" mnemonicParsing="false" style="-fx-background-color: #FFC107; -fx-text-fill: black;" text="Edit" />
 		<Button fx:id="searchButton" layoutX="481.0" layoutY="503.0" mnemonicParsing="false" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Search" />
-		
-		<TextField fx:id="idField" layoutX="59.0" layoutY="330.0" promptText="Customer ID"/>
-		<TextField fx:id="nameField" layoutX="59.0" layoutY="370.0" promptText="Customer Name"/>
-		<TextField fx:id="addressField" layoutX="59.0" layoutY="410.0" promptText="Address"/>
-		<TextField fx:id="phoneField" layoutX="59.0" layoutY="450.0" promptText="Phone"/>
 
-		<AnchorPane layoutY="-1.0" prefHeight="74.0" prefWidth="655.0" style="-fx-background-color: #87CEFA;">
+		<AnchorPane prefHeight="20.0" prefWidth="654.0" style="-fx-background-color: #87CEFA;">
 			<children>
-				<Text layoutX="230.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER" textAlignment="CENTER">
+				<Text layoutX="245.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER" textAlignment="CENTER">
 					<font>
-						<Font name="System Bold" size="36.0" />
+						<Font name="System Bold" size="24.0" />
 					</font>
 				</Text>
-				<ImageView fx:id="logoView" fitHeight="57.0" fitWidth="71.0" layoutX="147.0" layoutY="9.0">
+				<ImageView fx:id="logoView" fitHeight="49.0" fitWidth="56.0" layoutX="160.0" layoutY="1.0">
 					<image>
-						<Image url="@Img/Customer.png" />
+						<Image url="@/img/Customer.png" />
 					</image>
 				</ImageView>
 			</children>
 		</AnchorPane>
-		<ProgressIndicator fx:id="progressIndicator" layoutX="300" layoutY="327" prefWidth="30" prefHeight="30" visible="false" />
 	</children>
 </AnchorPane>

@@ -1,4 +1,4 @@
-package DAO;
+package main.java.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Account_DAO {
 
-	public boolean checkAcc(String user, String pass) throws SQLException {
+	public boolean checkAcc(String user, String pass) {
 		boolean isValid = false;
 		Connection conn = DB_CONECTION.getConnection();
 

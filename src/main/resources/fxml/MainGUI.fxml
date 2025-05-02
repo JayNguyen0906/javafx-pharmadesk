@@ -9,37 +9,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ProgressIndicator?>
-<BorderPane prefHeight="600.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainGUI_Controller">
+<BorderPane prefHeight="600.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main_Controller">
    <center>
       <AnchorPane prefHeight="169.0" prefWidth="654.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="402.0" fitWidth="586.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Img/KeDonThuoc.png" />
+                  <Image url="@/KeDonThuoc.png" />
                </image>
             </ImageView>
-            <Button layoutX="431.0" layoutY="343.0" mnemonicParsing="false" style="             -fx-background-color: rgba(255, 255, 255, 0.2);             -fx-text-fill: white;             -fx-background-radius: 20;             -fx-border-color: white;             -fx-border-width: 1;             -fx-border-radius: 20;             -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);         " text="Kê đơn thuốc ngay" />
-         </children></AnchorPane>
+            <Button layoutX="431.0" layoutY="343.0" mnemonicParsing="false" style=" -fx-background-color: rgba(255, 255, 255, 0.2);             -fx-text-fill: white;             -fx-background-radius: 20;             -fx-border-color: white;             -fx-border-width: 1;             -fx-border-radius: 20;             -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);         " text="Kê đơn thuốc ngay" />
+         </children>
+       </AnchorPane>
    </center>
    <left>
       <VBox prefHeight="391.0" prefWidth="99.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" text="Goods" fx:id="btnGoods" onAction="#handleGoods"/>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Customers" fx:id="btnCustomers" onAction="#handleCustomers" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bill" fx:id="btnBill" onAction="#handleBill"/>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Employee" fx:id="btnEmployee" onAction="#handleEmployee"/>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Supplier" fx:id="btnSupplier" onAction="#handleSupplier"/>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Warehouse" fx:id="btnWarehouse" onAction="#handleWarehouse"/>
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" text="Goods" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Customers" onAction="#loadCustomer" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bill" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Employee" onAction="#loadEmployee" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Supplier" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Warehouse" />
          </children>
       </VBox>
    </left>
    <top>
       <Pane prefHeight="193.0" prefWidth="685.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="283.0" fitWidth="735.0" layoutX="-23.0" layoutY="-95.0" pickOnBounds="true">
+            <ImageView fx:id="headerImage" fitHeight="283.0" fitWidth="735.0" layoutX="-23.0" layoutY="-95.0" pickOnBounds="true">
                <image>
-                  <Image url="@Img/Logo2.png" />
+                  <Image url="@/Logo2.png" />
                </image>
             </ImageView>
          </children></Pane>
@@ -51,8 +51,6 @@
             <Text layoutX="128.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phan Văn Nhật Hiếu" />
             <Text layoutX="252.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nguyễn Văn Hòa" />
             <Text layoutX="362.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trường ĐH Công nghệ thông tin &amp; Truyền thông Việt Hàn" />
-         </children>
-      </Pane>
+         </children></Pane>
    </bottom>
-   <ProgressIndicator fx:id="progressIndicator" layoutX="300" layoutY="327" prefWidth="30" prefHeight="30" visible="false" />
 </BorderPane>

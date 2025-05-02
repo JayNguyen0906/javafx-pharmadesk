@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Good_Controller">
-	<children>
-		<TableView layoutX="10.0" layoutY="90.0" prefHeight="300.0" prefWidth="800.0" fx:id="tableView">
-			<columns>
-				<TableColumn prefWidth="100.0" text="ID" fx:id="idColumn" />
-				<TableColumn prefWidth="330.0" text="Name" fx:id="nameColumn"/>
-				<TableColumn prefWidth="185.0" fx:id="priceColumn" text="Price" />
-				<TableColumn prefWidth="185.0" fx:id="quantityColumn" text="Quantity" />
-			</columns>
-		</TableView>
+<AnchorPane prefHeight="600.0" prefWidth="654.0"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.java.GUI.Good_Controller">
+    <children>
 
-		<!-- Input fields -->
-		<TextField fx:id="idField" layoutX="30.0" layoutY="410.0" prefWidth="180.0" promptText="ID"/>
-		<TextField fx:id="nameField" layoutX="230.0" layoutY="410.0" prefWidth="180.0" promptText="Name"/>
-		<TextField fx:id="priceField" layoutX="430.0" layoutY="410.0" prefWidth="180.0" promptText="Price"/>
-		<TextField fx:id="quantityField" layoutX="630.0" layoutY="410.0" prefWidth="180.0" promptText="Quantity"/>
+        <!-- Header -->
+        <AnchorPane layoutY="-1.0" prefHeight="74.0" prefWidth="655.0" style="-fx-background-color: #87CEFA;">
+            <children>
+                <Text layoutX="243.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GOOD" textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="36.0" />
+                    </font>
+                </Text>
+            </children>
+        </AnchorPane>
 
-		<!-- Buttons -->
-		<Button fx:id="addButton" layoutX="90.0" layoutY="470.0" mnemonicParsing="false" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" onAction="#handleAdd"/>
-		<Button fx:id="deleteButton" layoutX="240.0" layoutY="470.0" mnemonicParsing="false" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Delete" onAction="#handleDelete"/>
-		<Button fx:id="editButton" layoutX="390.0" layoutY="470.0" mnemonicParsing="false" style="-fx-background-color: #FFC107; -fx-text-fill: black;" text="Edit" onAction="#handleEdit"/>
-		<Button fx:id="searchButton" layoutX="540.0" layoutY="470.0" mnemonicParsing="false" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Search" onAction="#handleSearch"/>
+        <!-- TableView -->
+        <TableView fx:id="tableView" layoutX="8.0" layoutY="90.0" prefHeight="223.0" prefWidth="635.0">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="100.0" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Name" />
+                <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Price" />
+                <TableColumn fx:id="quantityColumn" prefWidth="150.0" text="Quantity" />
+            </columns>
+        </TableView>
 
-		<!-- Header -->
-		<AnchorPane layoutY="-1.0" prefHeight="74.0" prefWidth="820.0" style="-fx-background-color: #87CEFA;">
-			<children>
-				<Text layoutX="320.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GOOD" textAlignment="CENTER">
-					<font>
-						<Font name="System Bold" size="36.0" />
-					</font>
-				</Text>
-			</children>
-		</AnchorPane>
-	</children>
+        <!-- Input Fields -->
+        <Label layoutX="30.0" layoutY="340.0" text="ID:" />
+        <TextField fx:id="idField" layoutX="100.0" layoutY="335.0" prefWidth="200.0" />
+
+        <Label layoutX="30.0" layoutY="380.0" text="Name:" />
+        <TextField fx:id="nameField" layoutX="100.0" layoutY="375.0" prefWidth="200.0" />
+
+        <Label layoutX="330.0" layoutY="340.0" text="Price:" />
+        <TextField fx:id="priceField" layoutX="400.0" layoutY="335.0" prefWidth="200.0" />
+
+        <Label layoutX="330.0" layoutY="380.0" text="Quantity:" />
+        <TextField fx:id="quantityField" layoutX="400.0" layoutY="375.0" prefWidth="200.0" />
+
+        <!-- Buttons -->
+        <Button fx:id="addButton" layoutX="59.0" layoutY="503.0" mnemonicParsing="false"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Add" />
+        <Button fx:id="deleteButton" layoutX="204.0" layoutY="503.0" mnemonicParsing="false"
+                style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Delete" />
+        <Button fx:id="editButton" layoutX="345.0" layoutY="503.0" mnemonicParsing="false"
+                style="-fx-background-color: #FFC107; -fx-text-fill: black;" text="Edit" />
+        <Button fx:id="searchButton" layoutX="481.0" layoutY="503.0" mnemonicParsing="false"
+                style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Search" />
+
+    </children>
 </AnchorPane>

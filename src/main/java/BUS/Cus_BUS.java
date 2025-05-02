@@ -1,38 +1,38 @@
-package BUS;
+package main.java.BUS;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import DAO.Cus_DAO;
-import DTO.Customer;
+import main.java.DAO.Cus_DAO;
+import main.java.DTO.Customer;
 
 public class Cus_BUS {
+	
+		private Cus_DAO cusDAO;
 
-    private Cus_DAO cusDAO;
+		public Cus_BUS() {
+			cusDAO = new Cus_DAO();
+		}
+		
+		public List<Customer> getAllCustomers() throws SQLException {
+			return cusDAO.getAllCustomer();
+		}
+		
+		public boolean addCustomer(Customer customer) throws SQLException {
+		    return cusDAO.addCustomer(customer);
+		}
 
-    public Cus_BUS() {
-        cusDAO = new Cus_DAO();
-    }
+		public boolean deleteCustomer(String id) throws SQLException {
+		    return cusDAO.deleteCustomer(id);
+		}
 
-    public List<Customer> getAllCustomers() throws SQLException {
-        return cusDAO.getAllCustomer();
-    }
+		public boolean updateCustomer(Customer customer) throws SQLException {
+		    return cusDAO.updateCustomer(customer);
+		}
 
-    public boolean addCustomer(Customer customer) throws SQLException {
-        return cusDAO.addCustomer(customer);
-    }
-
-    public boolean deleteCustomer(String id) throws SQLException {
-        return cusDAO.deleteCustomer(id);
-    }
-
-    public boolean updateCustomer(Customer customer) throws SQLException {
-        return cusDAO.updateCustomer(customer);
-    }
-
-
-    public Customer getCustomerById(String Customer_ID){
-        return Cus_DAO.getCustomerById(Customer_ID);
-    }
+		
+		public Customer getCustomerById(String Customer_ID){
+	        return Cus_DAO.getCustomerById(Customer_ID);
+	    }
 
 }

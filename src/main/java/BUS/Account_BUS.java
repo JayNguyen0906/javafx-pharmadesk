@@ -1,8 +1,6 @@
-package BUS;
+package main.java.BUS;
 
-import DAO.Account_DAO;
-
-import java.sql.SQLException;
+import main.java.DAO.Account_DAO;
 
 public class Account_BUS {
 
@@ -12,7 +10,7 @@ public class Account_BUS {
 		accDAO = new Account_DAO();
 	}
 	
-	public boolean checkLogin(String user, String pass) throws SQLException {
+	public boolean checkLogin(String user, String pass) {
 		return accDAO.checkAcc(user, pass);
 	}
 }

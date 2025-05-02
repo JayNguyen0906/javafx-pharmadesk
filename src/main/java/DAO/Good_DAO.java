@@ -1,9 +1,10 @@
-package DAO;
+package main.java.DAO;
 
-import DTO.Good;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import main.java.DTO.Good;
 
 public class Good_DAO {
 
@@ -18,10 +19,10 @@ public class Good_DAO {
 
             while (rs.next()) {
                 Good good = new Good();
-                good.setId(rs.getString("Goods_ID"));
-                good.setName(rs.getString("Goods_Name"));
-                good.setPrice(rs.getDouble("Prices"));
-                good.setQuantity(rs.getString("Classifications"));
+                good.setId(rs.getString("id"));
+                good.setName(rs.getString("name"));
+                good.setPrice(rs.getDouble("price"));
+                good.setQuantity(rs.getString("quantity"));
                 goods.add(good);
             }
         }
@@ -30,15 +31,15 @@ public class Good_DAO {
 
     // Thêm sản phẩm mới
     public boolean addGood(Good good) throws SQLException {
-        String sql = "INSERT INTO goods (Goods_ID, Goods_Name, Classifications, Prices) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO goods (id, name, price, quantity) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DB_CONECTION.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, good.getId());
             stmt.setString(2, good.getName());
-            stmt.setDouble(4, good.getPrice());
-            stmt.setString(3, good.getQuantity());
+            stmt.setDouble(3, good.getPrice());
+            stmt.setString(4, good.getQuantity());
 
             int rowsInserted = stmt.executeUpdate();
             return rowsInserted > 0;
@@ -47,7 +48,7 @@ public class Good_DAO {
 
     // Xóa sản phẩm theo ID
     public boolean deleteGood(String id) throws SQLException {
-        String sql = "DELETE FROM goods WHERE Goods_ID = ?";  // Chỉnh sửa tên cột
+        String sql = "DELETE FROM goods WHERE id = ?";
 
         try (Connection conn = DB_CONECTION.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -57,6 +58,7 @@ public class Good_DAO {
             return rowsDeleted > 0;
         }
     }
+
     // Cập nhật thông tin sản phẩm
     public boolean updateGood(Good good) throws SQLException {
         String sql = "UPDATE goods SET name = ?, price = ?, quantity = ? WHERE id = ?";

@@ -1,7 +1,5 @@
-package GUI;
+package main.java.GUI;
 
-import BUS.Good_BUS;
-import DTO.Good;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import main.java.BUS.Good_BUS;
+import main.java.DTO.Good;
 
 import java.sql.SQLException;
 
@@ -48,19 +48,11 @@ public class Good_Controller {
     public void initialize() {
         goodBUS = new Good_BUS();
 
-        // Set up columns - only if the columns are not null
-        if (idColumn != null) {
-            idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
-        }
-        if (nameColumn != null) {
-            nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        }
-        if (priceColumn != null) {
-            priceColumn.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
-        }
-        if (quantityColumn != null) {
-            quantityColumn.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
-        }
+        // Set up columns
+        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        priceColumn.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
+        quantityColumn.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
 
         // Load initial data
         try {
@@ -81,7 +73,6 @@ public class Good_Controller {
         tableView.setItems(goodList);
     }
 
-    @FXML
     private void handleAdd(ActionEvent event) {
         try {
             String id = idField.getText();
@@ -109,7 +100,6 @@ public class Good_Controller {
         }
     }
 
-    @FXML
     private void handleDelete(ActionEvent event) {
         try {
             Good selected = tableView.getSelectionModel().getSelectedItem();
@@ -126,7 +116,6 @@ public class Good_Controller {
         }
     }
 
-    @FXML
     private void handleEdit(ActionEvent event) {
         try {
             Good selected = tableView.getSelectionModel().getSelectedItem();
@@ -148,7 +137,6 @@ public class Good_Controller {
         }
     }
 
-    @FXML
     private void handleSearch(ActionEvent event) {
         String keyword = nameField.getText().trim().toLowerCase();
         if (!keyword.isEmpty()) {

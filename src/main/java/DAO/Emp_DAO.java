@@ -1,7 +1,4 @@
-package DAO;
-
-import DTO.Employee;
-import DTO.Supplier;
+package main.java.DAO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import main.java.DTO.Employee;
 
 public class Emp_DAO {
     public List<Employee> getAllEmp() throws SQLException {

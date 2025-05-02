@@ -1,9 +1,8 @@
-package BUS;
+package main.java.BUS;
 
 
-import DAO.Good_DAO;
-
-import DTO.Good;
+import main.java.DAO.Good_DAO;
+import main.java.DTO.Good;
 
 import java.sql.SQLException;
 import java.util.List;

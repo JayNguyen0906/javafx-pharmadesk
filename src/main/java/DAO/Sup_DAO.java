@@ -1,10 +1,10 @@
-package DAO;
-
-import DTO.Supplier;
+package main.java.DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import main.java.DTO.Supplier;
 
 public class Sup_DAO {
     public List<Supplier> getAllSup() throws SQLException{
