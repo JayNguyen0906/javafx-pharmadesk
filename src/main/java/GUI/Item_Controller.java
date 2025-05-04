@@ -8,22 +8,22 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import main.java.BUS.Good_BUS;
-import main.java.DTO.Good;
+import main.java.BUS.Item_BUS;
+import main.java.DTO.Item;
 
 import java.sql.SQLException;
 
-public class Good_Controller {
+public class Item_Controller {
     @FXML
-    private TableView<Good> tableView;
+    private TableView<Item> tableView;
     @FXML
-    private TableColumn<Good, String> idColumn;
+    private TableColumn<Item, String> idColumn;
     @FXML
-    private TableColumn<Good, String> nameColumn;
+    private TableColumn<Item, String> nameColumn;
     @FXML
-    private TableColumn<Good, Double> priceColumn;
+    private TableColumn<Item, Double> priceColumn;
     @FXML
-    private TableColumn<Good, String> quantityColumn;
+    private TableColumn<Item, String> quantityColumn;
     @FXML
     private Button addButton;
     @FXML
@@ -41,12 +41,12 @@ public class Good_Controller {
     @FXML
     private TextField quantityField;
 
-    private Good_BUS goodBUS;
-    private ObservableList<Good> goodList;
+    private Item_BUS ItemBUS;
+    private ObservableList<Item> ItemList;
 
     @FXML
     public void initialize() {
-        goodBUS = new Good_BUS();
+        ItemBUS = new Item_BUS();
 
         // Set up columns
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
@@ -56,7 +56,7 @@ public class Good_Controller {
 
         // Load initial data
         try {
-            loadGoodData();
+            loadItemData();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,9 +68,9 @@ public class Good_Controller {
         searchButton.setOnAction(this::handleSearch);
     }
 
-    private void loadGoodData() throws SQLException {
-        goodList = FXCollections.observableArrayList(Good_BUS.good_dao.getAllGood());
-        tableView.setItems(goodList);
+    private void loadItemData() throws SQLException {
+        ItemList = FXCollections.observableArrayList(Item_BUS.Item_dao.getAllItem());
+        tableView.setItems(ItemList);
     }
 
     private void handleAdd(ActionEvent event) {
@@ -85,10 +85,10 @@ public class Good_Controller {
                 return;
             }
 
-            Good newGood = new Good(id, name, price, quantity);
+            Item newItem = new Item(id, name, price, quantity);
 
-            if (goodBUS.addGood(newGood)) {
-                goodList.add(newGood);
+            if (ItemBUS.addItem(newItem)) {
+                ItemList.add(newItem);
                 System.out.println("Product added successfully.");
             } else {
                 System.out.println("Product already exists or error adding.");
@@ -102,10 +102,10 @@ public class Good_Controller {
 
     private void handleDelete(ActionEvent event) {
         try {
-            Good selected = tableView.getSelectionModel().getSelectedItem();
+            Item selected = tableView.getSelectionModel().getSelectedItem();
             if (selected != null) {
-                if (goodBUS.deleteGood(selected.getId())) {
-                    goodList.remove(selected);
+                if (ItemBUS.deleteItem(selected.getId())) {
+                    ItemList.remove(selected);
                     System.out.println("Product deleted successfully.");
                 }
             } else {
@@ -118,13 +118,13 @@ public class Good_Controller {
 
     private void handleEdit(ActionEvent event) {
         try {
-            Good selected = tableView.getSelectionModel().getSelectedItem();
+            Item selected = tableView.getSelectionModel().getSelectedItem();
             if (selected != null) {
                 selected.setName(nameField.getText());
                 selected.setPrice(Double.parseDouble(priceField.getText()));
                 selected.setQuantity(quantityField.getText());
 
-                goodBUS.updateGood(selected);
+                ItemBUS.updateItem(selected);
                 tableView.refresh();
                 System.out.println("Product updated successfully.");
             } else {
@@ -140,15 +140,15 @@ public class Good_Controller {
     private void handleSearch(ActionEvent event) {
         String keyword = nameField.getText().trim().toLowerCase();
         if (!keyword.isEmpty()) {
-            ObservableList<Good> filtered = FXCollections.observableArrayList();
-            for (Good g : goodList) {
+            ObservableList<Item> filtered = FXCollections.observableArrayList();
+            for (Item g : ItemList) {
                 if (g.getName().toLowerCase().contains(keyword) || g.getId().toLowerCase().contains(keyword)) {
                     filtered.add(g);
                 }
             }
             tableView.setItems(filtered);
         } else {
-            tableView.setItems(goodList);
+            tableView.setItems(ItemList);
         }
     }
 }

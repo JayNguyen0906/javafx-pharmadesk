@@ -1,69 +1,60 @@
 package main.java.DTO;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Warehouse {
-	private String ID_Good;
-	private String ID_Supp;
-	private int CurrentQuantity;
-	private Date Expiry;
-	private double PrimeCost;
+	private String itemName;
+	private String supplierName;
+	private int currentQuantity;
+	private Date expiry;
+	private double primeCost;
 
-	public Warehouse() {
+	public Warehouse(String itemName, String supplierName, int currentQuantity, Date expiry, double primeCost) {
+		this.itemName = itemName;
+		this.supplierName = supplierName;
+		this.currentQuantity = currentQuantity;
+		this.expiry = expiry;
+		this.primeCost = primeCost;
 	}
 
-	public Warehouse(String iD_Good, String iD_Supp, int currentQuantity, Date expiry, double primeCost) {
-		ID_Good = iD_Good;
-		ID_Supp = iD_Supp;
-		CurrentQuantity = currentQuantity;
-		Expiry = expiry;
-		PrimeCost = primeCost;
+	public String getItemName() {
+		return itemName;
 	}
 
-	public String getID_Good() {
-		return ID_Good;
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
-	public void setID_Good(String iD_Good) {
-		ID_Good = iD_Good;
+	public String getSupplierName() {
+		return supplierName;
 	}
 
-	public String getID_Supp() {
-		return ID_Supp;
-	}
-
-	public void setID_Supp(String iD_Supp) {
-		ID_Supp = iD_Supp;
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 
 	public int getCurrentQuantity() {
-		return CurrentQuantity;
+		return currentQuantity;
 	}
 
 	public void setCurrentQuantity(int currentQuantity) {
-		CurrentQuantity = currentQuantity;
+		this.currentQuantity = currentQuantity;
 	}
 
 	public Date getExpiry() {
-		return Expiry;
+		return expiry;
 	}
 
 	public void setExpiry(Date expiry) {
-		Expiry = expiry;
+		this.expiry = expiry;
 	}
 
 	public double getPrimeCost() {
-		return PrimeCost;
+		return primeCost;
 	}
 
 	public void setPrimeCost(double primeCost) {
-		PrimeCost = primeCost;
+		this.primeCost = primeCost;
 	}
-
-	@Override
-	public String toString() {
-		return "Warehouse [ID_Good=" + ID_Good + ", ID_Supp=" + ID_Supp + ", CurrentQuantity=" + CurrentQuantity
-				+ ", Expiry=" + Expiry + ", PrimeCost=" + PrimeCost + "]";
-	}
-
+	
 }

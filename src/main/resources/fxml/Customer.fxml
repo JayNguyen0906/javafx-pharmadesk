@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.GUI.Cus_Controller">
-	<children>
+	<children>			
 		<TableView fx:id="tableView" layoutX="8.0" layoutY="90.0" prefHeight="223.0" prefWidth="635.0">
 			<columns>
 				<TableColumn fx:id="id" prefWidth="82.66665935516357" text="ID" />

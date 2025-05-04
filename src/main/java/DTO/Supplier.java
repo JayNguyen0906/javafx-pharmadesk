@@ -1,57 +1,57 @@
 package main.java.DTO;
 
 public class Supplier {
-	private String ID_Supp;
-	private String Name_Supp;
-	private String Phone_Supp;
-	private String Email_Supp;
+	private String ID_Sup;
+	private String Name_Sup;
+	private String Phone_Sup;
+	private String Email_Sup;
 
 	public Supplier() {
 	}
 
-	public Supplier(String iD_Supp, String name_Supp, String phone_Supp, String email_Supp) {
-		ID_Supp = iD_Supp;
-		Name_Supp = name_Supp;
-		Phone_Supp = phone_Supp;
-		Email_Supp = email_Supp;
+	public Supplier(String iD_Sup, String name_Sup, String phone_Sup, String email_Sup) {
+		ID_Sup = iD_Sup;
+		Name_Sup = name_Sup;
+		Phone_Sup = phone_Sup;
+		Email_Sup = email_Sup;
 	}
 
-	public String getID_Supp() {
-		return ID_Supp;
+	public String getID_Sup() {
+		return ID_Sup;
 	}
 
-	public void setID_Supp(String iD_Supp) {
-		ID_Supp = iD_Supp;
+	public void setID_Sup(String iD_Sup) {
+		ID_Sup = iD_Sup;
 	}
 
-	public String getName_Supp() {
-		return Name_Supp;
+	public String getName_Sup() {
+		return Name_Sup;
 	}
 
-	public void setName_Supp(String name_Supp) {
-		Name_Supp = name_Supp;
+	public void setName_Sup(String name_Sup) {
+		Name_Sup = name_Sup;
 	}
 
-	public String getPhone_Supp() {
-		return Phone_Supp;
+	public String getPhone_Sup() {
+		return Phone_Sup;
 	}
 
-	public void setPhone_Supp(String phone_Supp) {
-		Phone_Supp = phone_Supp;
+	public void setPhone_Sup(String phone_Sup) {
+		Phone_Sup = phone_Sup;
 	}
 
-	public String getEmail_Supp() {
-		return Email_Supp;
+	public String getEmail_Sup() {
+		return Email_Sup;
 	}
 
-	public void setEmail_Supp(String email_Supp) {
-		Email_Supp = email_Supp;
+	public void setEmail_Sup(String email_Sup) {
+		Email_Sup = email_Sup;
 	}
 
 	@Override
 	public String toString() {
-		return "Supplier [ID_Supp=" + ID_Supp + ", Name_Supp=" + Name_Supp + ", Phone_Supp=" + Phone_Supp
-				+ ", Email_Supp=" + Email_Supp + "]";
+		return "Suplier [ID_Sup=" + ID_Sup + ", Name_Sup=" + Name_Sup + ", Phone_Sup=" + Phone_Sup
+				+ ", Email_Sup=" + Email_Sup + "]";
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Bill {
 	private String ID_Bill;
-	private String ID_Good;
+	private String ID_Item;
 	private String ID_Cus;
 	private int Quantity;
 	private double TotalAmount;
@@ -14,10 +14,10 @@ public class Bill {
 	public Bill() {
 	}
 
-	public Bill(String iD_Bill, String iD_Good, String iD_Cus, int quantity, double totalAmount, Date orderDate,
+	public Bill(String iD_Bill, String iD_Item, String iD_Cus, int quantity, double totalAmount, Date orderDate,
 			String status) {
 		ID_Bill = iD_Bill;
-		ID_Good = iD_Good;
+		ID_Item = iD_Item;
 		ID_Cus = iD_Cus;
 		Quantity = quantity;
 		TotalAmount = totalAmount;
@@ -33,12 +33,12 @@ public class Bill {
 		ID_Bill = iD_Bill;
 	}
 
-	public String getID_Good() {
-		return ID_Good;
+	public String getID_Item() {
+		return ID_Item;
 	}
 
-	public void setID_Good(String iD_Good) {
-		ID_Good = iD_Good;
+	public void setID_Item(String iD_Item) {
+		ID_Item = iD_Item;
 	}
 
 	public String getID_Cus() {
@@ -83,7 +83,7 @@ public class Bill {
 
 	@Override
 	public String toString() {
-		return "Bill [ID_Bill=" + ID_Bill + ", ID_Good=" + ID_Good + ", ID_Cus=" + ID_Cus + ", Quantity=" + Quantity
+		return "Bill [ID_Bill=" + ID_Bill + ", ID_Item=" + ID_Item + ", ID_Cus=" + ID_Cus + ", Quantity=" + Quantity
 				+ ", TotalAmount=" + TotalAmount + ", OrderDate=" + OrderDate + ", Status=" + Status + "]";
 	}
 
