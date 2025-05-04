@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.GUI.Warehouse_Controller">
+	 <top>
+	 	<StackPane>
+        	<Label layoutX="50" style="-fx-font-size: 20px; -fx-padding: 10; -fx-font-weight: bold;" text="Warehouse Management" />
+        </StackPane>
+    </top>
+    <center>
+        <TableView fx:id="tableView" prefHeight="400" prefWidth="600">
+            <columns>
+                <TableColumn fx:id="itemColumn" prefWidth="172.00000512599945" text="Item" />
+                <TableColumn fx:id="supplierColumn" minWidth="0.0" prefWidth="182.66664123535156" text="Supplier" />
+                <TableColumn fx:id="currentquantityColumn" prefWidth="118.66668701171875" text="Current Quantity" />
+                <TableColumn fx:id="expiryColumn" minWidth="0.0" prefWidth="88.66677856445312" text="Expiry" />
+                <TableColumn fx:id="primecostColumn" minWidth="0.0" prefWidth="114.66668701171875" text="Prime Cost" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+	    <HBox alignment="CENTER" spacing="10">
+		    <padding>
+		        <Insets bottom="10" left="30" right="30" top="10" />
+		    </padding>
+         	<Button fx:id="searchButton" maxWidth="Infinity" onAction="#handleSearch" text="Search" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="addButton" maxWidth="Infinity" onAction="#handleAdd" text="Add" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="editButton" maxWidth="Infinity" onAction="#handleEdit" text="Edit" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="deleteButton" maxWidth="Infinity" onAction="#handleDelete" text="Delete" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="refreshButton" maxWidth="Infinity" onAction="#handleRefresh" text="Refresh" HBox.hgrow="ALWAYS" />
+	    </HBox>
+	</bottom>
+</BorderPane>
