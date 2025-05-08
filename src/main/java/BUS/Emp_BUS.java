@@ -11,8 +11,13 @@ import java.util.List;
 import BUS.Cus_BUS;
 
 public class Emp_BUS {
-    public static Emp_DAO emp_dao;
+    public static Emp_DAO emp_dao = new Emp_DAO();
+
     public List<Employee> getAllEmp() throws SQLException {
-        return emp_dao.getAllEmp();
+        return emp_dao.getAll();
+    }
+
+    public boolean addEmployee(Employee e) {
+        return emp_dao.insert(e);
     }
 }

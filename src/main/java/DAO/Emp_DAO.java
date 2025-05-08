@@ -1,32 +1,55 @@
-package main.java.DAO;
+package DAO;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import DTO.Employee;
+import DTO.Supplier;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.DTO.Employee;
-
 public class Emp_DAO {
-    public List<Employee> getAllEmp() throws SQLException {
-        List<Employee> employees = new ArrayList<>();
-        String sql = "Select * FROM employees";
-        try (Connection con = DB_CONECTION.getConnection();
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql);
-        ){
-            while (rs.next()){
-                Employee employee = new Employee();
-                employee.setID_Emp(rs.getString("Emp_Id"));
-                employee.setName_Emp(rs.getString("Emp_Name"));
-                employee.setPhone_Emp(rs.getString("Emp_Phone"));
-                employee.setCCCD_Emp(rs.getString("Emp_CCCD"));
-                employees.add(employee);
-                System.out.println(employee);
+    public List<Employee> getAll() {
+        List<Employee> list = new ArrayList<>();
+        String query = "SELECT * FROM employees";
+
+        try (Connection conn = DB_CONECTION.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                list.add(new Employee(
+                        rs.getString("ID"),
+                        rs.getString("name"),
+                        rs.getString("Position"),
+                        rs.getString("Email"),
+                        rs.getString("Phone"),
+                        rs.getString("CCCD")
+                ));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return employees;
+        return list;
     }
+
+    public boolean insert(Employee e) {
+        String sql = "INSERT INTO employees (ID, name,Position,Email, Phone, CCCD) VALUES (?, ?, ?, ?,?,?)";
+
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, e.getID_Emp());
+            stmt.setString(2, e.getName_Emp());
+            stmt.setString(3, e.getPosition_Emp());
+            stmt.setString(4, e.getEmail_Emp());
+            stmt.setString(5, e.getPhone_Emp());
+            stmt.setString(6, e.getCCCD_Emp());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }

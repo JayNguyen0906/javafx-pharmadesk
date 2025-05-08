@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="GUI.Emp_Card_Controller"
+      spacing="5" style="-fx-padding: 10; -fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 10; -fx-background-radius: 10;">
+    <Label fx:id="idLabel"/>
+    <Label fx:id="nameLabel"/>
+    <Label fx:id="positionLabel"/>
+    <Label fx:id="emailLabel"/>
+    <Label fx:id="phoneLabel"/>
+    <Label fx:id="cccdLabel"/>
+</VBox>
