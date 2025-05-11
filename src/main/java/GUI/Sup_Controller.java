@@ -1,4 +1,4 @@
-package main.java.GUI;
+package GUI;
 
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -7,8 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.java.BUS.Sup_BUS;
-import main.java.DTO.Supplier;
+import BUS.Sup_BUS;
+import DTO.Supplier;
 
 import java.sql.SQLException;
 
@@ -59,7 +59,7 @@ public class Sup_Controller {
 		refreshButton.setOnAction(event -> handleRefresh());
 	}
 
-	// Thêm khách hàng
+	// Thêm
 	@FXML
 	private void handleAdd() {
 		Dialog<Supplier> dialog = createSupplierDialog(null, false);
@@ -75,7 +75,7 @@ public class Sup_Controller {
 			
 			try {
 				if (supBUS.addSupplier(newSupplier)) {
-					loadSupplierData();
+					tableView.refresh();
 					showAlert("Supplier added successfully!");
 				} else {
 					showAlert("Supplier already exists or failed to add!");
@@ -86,7 +86,7 @@ public class Sup_Controller {
 		});
 	}
 
-	// Xóa khách hàng
+	// Xóa
 	@FXML
 	private void handleDelete() {
 		Supplier selected = tableView.getSelectionModel().getSelectedItem();
@@ -106,7 +106,7 @@ public class Sup_Controller {
 		}
 	}
 
-	// Sửa thông tin khách hàng
+	// Sửa
 	@FXML
 	private void handleEdit() {
 		Supplier selected = tableView.getSelectionModel().getSelectedItem();

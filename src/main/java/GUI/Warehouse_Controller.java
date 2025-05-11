@@ -1,4 +1,4 @@
-package main.java.GUI;
+package GUI;
 
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -7,8 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.java.BUS.Warehouse_BUS;
-import main.java.DTO.Warehouse;
+import BUS.Warehouse_BUS;
+import DTO.Warehouse;
 
 import java.sql.Date;
 import java.time.LocalDate;

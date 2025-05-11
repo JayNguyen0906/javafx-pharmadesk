@@ -1,4 +1,4 @@
-package main.java.DAO;
+package DAO;
 
 import java.sql.Statement;
 import java.sql.Connection;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.DTO.Warehouse;
+import DTO.Warehouse;
 
 public class Warehouse_DAO {
 

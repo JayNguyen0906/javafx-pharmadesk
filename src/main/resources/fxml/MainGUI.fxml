@@ -5,52 +5,42 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.GUI.Main_Controller">
-   <center>
-      <AnchorPane prefHeight="169.0" prefWidth="654.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="402.0" fitWidth="598.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@/img/KeDonThuoc.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="459.0" layoutY="345.0" mnemonicParsing="false" style=" -fx-background-color: rgba(255, 255, 255, 0.2);             -fx-text-fill: white;             -fx-background-radius: 20;             -fx-border-color: white;             -fx-border-width: 1;             -fx-border-radius: 20;             -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);         " text="Kê đơn thuốc ngay" />
-         </children>
-       </AnchorPane>
-   </center>
-   <left>
-      <VBox prefHeight="391.0" prefWidth="99.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" text="Goods" />
-            <Button mnemonicParsing="false" onAction="#loadCustomer" prefHeight="30.0" prefWidth="100.0" text="Customers" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Bill" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Employee" />
-            <Button mnemonicParsing="false" onAction="#loadSupplier" prefHeight="30.0" prefWidth="100.0" text="Supplier" />
-            <Button mnemonicParsing="false" onAction="#loadWarehouse" prefHeight="30.0" prefWidth="100.0" text="Warehouse" />
-         </children>
-      </VBox>
-   </left>
-   <top>
-      <Pane prefHeight="193.0" prefWidth="700.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="headerImage" fitHeight="307.0" fitWidth="789.0" layoutX="-39.0" layoutY="-116.0" pickOnBounds="true">
-               <image>
-                  <Image url="@/img/Logo2.png" />
-               </image>
-            </ImageView>
-         </children></Pane>
-   </top>
-   <bottom>
-      <Pane prefHeight="33.0" prefWidth="654.0" BorderPane.alignment="CENTER">
-         <children>
-            <Text layoutX="25.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đồ án cơ sở 1" />
-            <Text layoutX="128.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phan Văn Nhật Hiếu" />
-            <Text layoutX="265.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nguyễn Văn Hòa" />
-            <Text layoutX="377.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trường ĐH Công nghệ thông tin &amp; Truyền thông Việt Hàn" />
-         </children></Pane>
-   </bottom>
-</BorderPane>
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main_Controller">
+
+
+	    <AnchorPane BorderPane.alignment="CENTER">
+	        <children>
+	            <ImageView fx:id="headerImage" pickOnBounds="true" preserveRatio="true" >
+	                <image>
+	                    <Image url="@/img/Banner.png" />
+	                </image>
+	            </ImageView>
+	        </children>
+	    </AnchorPane>
+	    
+	<BorderPane VBox.vgrow="ALWAYS">
+    <left>
+	    <AnchorPane prefWidth="120.0" BorderPane.alignment="CENTER">
+	        <children>
+	            <VBox alignment="TOP_CENTER" prefWidth="120.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+	                <children>
+	                    <Button mnemonicParsing="false" onAction="#loadItem" prefWidth="120.0" text="Items" />
+	                    <Button mnemonicParsing="false" onAction="#loadCustomer" prefWidth="120.0" text="Customers" />
+	                    <Button mnemonicParsing="false" prefWidth="120.0" text="Bill" />
+	                    <Button mnemonicParsing="false" onAction="#loadEmployee" prefWidth="120.0" text="Employee" />
+	                    <Button mnemonicParsing="false" onAction="#loadSupplier" prefWidth="120.0" text="Supplier" />
+	                    <Button mnemonicParsing="false" onAction="#loadWarehouse" prefWidth="120.0" text="Warehouse" />
+	                </children>
+	            </VBox>
+	        </children>
+	    </AnchorPane>
+	</left>
+
+    <center>
+        <StackPane fx:id="mainContent"  prefHeight="768.0" prefWidth="1336.0"> </StackPane>
+    </center>
+    </BorderPane>
+</VBox>

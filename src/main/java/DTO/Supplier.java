@@ -1,4 +1,4 @@
-package main.java.DTO;
+package DTO;
 
 public class Supplier {
 	private String ID_Sup;

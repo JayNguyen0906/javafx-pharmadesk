@@ -1,10 +1,10 @@
-package main.java.BUS;
+package BUS;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.DAO.Cus_DAO;
-import main.java.DTO.Customer;
+import DAO.Cus_DAO;
+import DTO.Customer;
 
 public class Cus_BUS {
 	

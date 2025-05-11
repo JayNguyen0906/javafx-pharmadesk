@@ -1,8 +1,8 @@
-package main.java.BUS;
+package BUS;
 
 
-import main.java.DAO.Item_DAO;
-import main.java.DTO.Item;
+import DAO.Item_DAO;
+import DTO.Item;
 
 import java.sql.SQLException;
 import java.util.List;

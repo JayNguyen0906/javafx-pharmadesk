@@ -1,10 +1,10 @@
-package main.java.DAO;
+package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.DTO.Item;
+import DTO.Item;
 
 public class Item_DAO {
 

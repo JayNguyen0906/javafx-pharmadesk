@@ -9,19 +9,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.GUI.Sup_Controller">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Sup_Controller">
 	 <top>
 	 	<StackPane>
-        	<Label layoutX="50" style="-fx-font-size: 20px; -fx-padding: 10; -fx-font-weight: bold;" text="Supplier Management" />
+        	<Label layoutX="50" style="-fx-font-size: 20px; -fx-padding: 10; -fx-font-weight: bold;" text="SUPPLIER MANAGEMENT" />
         </StackPane>
     </top>
     <center>
         <TableView fx:id="tableView" prefHeight="400" prefWidth="600">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="100" text="Supplier ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="150" text="Name" />
-                <TableColumn fx:id="phoneColumn" prefWidth="150" text="Phone" />
-                <TableColumn fx:id="emailColumn" prefWidth="200" text="Email" />
+                <TableColumn fx:id="idColumn" prefWidth="150" text="Supplier ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="350" text="Name" />
+                <TableColumn fx:id="phoneColumn" prefWidth="300" text="Phone" />
+                <TableColumn fx:id="emailColumn" prefWidth="450" text="Email" />
             </columns>
         </TableView>
     </center>

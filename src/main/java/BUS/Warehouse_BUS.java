@@ -1,10 +1,10 @@
-package main.java.BUS;
+package BUS;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.DAO.Warehouse_DAO;
-import main.java.DTO.Warehouse;
+import DAO.Warehouse_DAO;
+import DTO.Warehouse;
 
 public class Warehouse_BUS {
 

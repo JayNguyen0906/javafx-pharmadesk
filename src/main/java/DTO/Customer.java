@@ -1,4 +1,4 @@
-package main.java.DTO;
+package DTO;
 
 public class Customer {
 	private String Id_Cus;

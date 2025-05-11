@@ -1,8 +1,6 @@
 package DAO;
 
 import DTO.Employee;
-import DTO.Supplier;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

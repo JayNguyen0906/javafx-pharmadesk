@@ -1,10 +1,10 @@
-package main.java.BUS;
+package BUS;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.DAO.Sup_DAO;
-import main.java.DTO.Supplier;
+import DAO.Sup_DAO;
+import DTO.Supplier;
 
 public class Sup_BUS {
 	

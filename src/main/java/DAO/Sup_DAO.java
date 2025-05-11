@@ -1,10 +1,10 @@
-package main.java.DAO;
+package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.DTO.Supplier;
+import DTO.Supplier;
 
 public class Sup_DAO {
     public List<Supplier> getAllSup() throws SQLException{
@@ -63,7 +63,7 @@ public class Sup_DAO {
     }
     
     public boolean deleteSupplier(String Supplier_ID) {
-		String query = "DELETE FROM Suppliers WHERE Supplier_ID = ?";
+		String query = "DELETE FROM Supplier WHERE Supplier_ID = ?";
 		try (Connection conn = DB_CONECTION.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
 			pstmt.setString(1, Supplier_ID);

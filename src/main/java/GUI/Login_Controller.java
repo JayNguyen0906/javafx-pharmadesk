@@ -1,4 +1,4 @@
-package main.java.GUI;
+package GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,14 +10,14 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import main.java.BUS.Account_BUS;
+import BUS.User_BUS;
 import javafx.scene.Node;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 
 public class Login_Controller {
-
+	
 	@FXML
 	private TextField usernameField;
 
@@ -59,30 +59,33 @@ public class Login_Controller {
 				String pass = passwordField.getText();
 				
 
-				Account_BUS accBUS = new Account_BUS();
-				boolean checkLogin = accBUS.checkLogin(user, pass);
-
+				User_BUS userBUS = new User_BUS();
+				
 				if (user.isEmpty() || pass.isEmpty()) {
-					showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập đầy đủ thông tin!");
+					showAlert(Alert.AlertType.ERROR, "Error", "Please enter complete information!");
 					return;
 				}
 
-				if (checkLogin) {
+				if (userBUS.login(user, pass) != null) {
 					try {
 						Parent mainView = FXMLLoader.load(getClass().getResource("/Fxml/MainGUI.fxml"));
 						Scene mainScene = new Scene(mainView);
-
-						// Lấy stage hiện tại từ button (hoặc bất kỳ node nào)
+						
+						Stage loginstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		                loginstage.close();
+		                
 						Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 						stage.setScene(mainScene);
 						stage.setTitle("Pharma DeskApp - Home");
+						stage.setMaximized(true);
+						stage.setResizable(true);
 						stage.show();
 					} catch (Exception e) {
 						e.printStackTrace();
-						showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể mở giao diện chính!");
+						showAlert(Alert.AlertType.ERROR, "Error", "Cannot open main interface!");
 					}
 				} else {
-					showAlert(Alert.AlertType.ERROR, "Sai tài khoản", "Tài khoản hoặc mật khẩu không đúng!");
+					showAlert(Alert.AlertType.ERROR, "Incorrect account", "Incorrect account or password!");
 				}
 			});
 		}).start();
@@ -102,10 +105,15 @@ public class Login_Controller {
 				try {
 					Parent registerView = FXMLLoader.load(getClass().getResource("/Fxml/Register.fxml"));
 					Scene registerScene = new Scene(registerView);
+					
+	                Stage loginstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	                loginstage.close();
 
-					Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					Stage stage = new Stage();
 					stage.setScene(registerScene);
-					stage.setTitle("Pharma DeskApp - Đăng ký");
+					stage.setTitle("Pharma DeskApp - Register");
+					stage.setMaximized(true);
+					stage.setResizable(true);
 					stage.show();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -121,7 +129,7 @@ public class Login_Controller {
 		alert.setContentText(massage);
 
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/Warning.png")));
+		stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/img/Warning.png")));
 
 		alert.showAndWait();
 	}

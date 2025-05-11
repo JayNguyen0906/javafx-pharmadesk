@@ -1,4 +1,4 @@
-package main.java.app;
+package app;
 
 import java.io.InputStream;
 
@@ -23,6 +23,9 @@ public class Main extends Application {
 		// Set icon
 		InputStream is = getClass().getResourceAsStream("/img/MainLogo.png");
 		primaryStage.getIcons().add(new Image(is));
+		
+		primaryStage.setMaximized(true);
+		primaryStage.setResizable(true);
 
 		primaryStage.show();
 

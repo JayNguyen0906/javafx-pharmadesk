@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.GUI.Warehouse_Controller">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Warehouse_Controller">
 	 <top>
 	 	<StackPane>
         	<Label layoutX="50" style="-fx-font-size: 20px; -fx-padding: 10; -fx-font-weight: bold;" text="Warehouse Management" />
@@ -18,11 +18,11 @@
     <center>
         <TableView fx:id="tableView" prefHeight="400" prefWidth="600">
             <columns>
-                <TableColumn fx:id="itemColumn" prefWidth="172.00000512599945" text="Item" />
-                <TableColumn fx:id="supplierColumn" minWidth="0.0" prefWidth="182.66664123535156" text="Supplier" />
-                <TableColumn fx:id="currentquantityColumn" prefWidth="118.66668701171875" text="Current Quantity" />
-                <TableColumn fx:id="expiryColumn" minWidth="0.0" prefWidth="88.66677856445312" text="Expiry" />
-                <TableColumn fx:id="primecostColumn" minWidth="0.0" prefWidth="114.66668701171875" text="Prime Cost" />
+                <TableColumn fx:id="itemColumn" prefWidth="300" text="Item" />
+                <TableColumn fx:id="supplierColumn" minWidth="0.0" prefWidth="300" text="Supplier" />
+                <TableColumn fx:id="currentquantityColumn" prefWidth="150" text="Current Quantity" />
+                <TableColumn fx:id="expiryColumn" minWidth="0.0" prefWidth="220" text="Expiry" />
+                <TableColumn fx:id="primecostColumn" minWidth="0.0" prefWidth="200" text="Prime Cost" />
             </columns>
         </TableView>
     </center>
