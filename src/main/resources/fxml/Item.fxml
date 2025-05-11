@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="654.0"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="main.java.GUI.Good_Controller">
+            fx:controller="GUI.Item_Controller">
     <children>
 
         <!-- Header -->
