@@ -24,7 +24,7 @@
 	                <Image url="@/img/Customer.png" />
 	            </image>
 	        </ImageView>
-	        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER MANAGEMENT" textAlignment="CENTER">
+	        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quản Lý Khách Hàng" textAlignment="CENTER">
 	            <font>
 	                <Font name="System Bold" size="24.0" />
 	            </font>
@@ -35,10 +35,10 @@
 	<center>
 		<TableView fx:id="tableView" prefHeight="223.0" prefWidth="635.0">
 			<columns>
-				<TableColumn fx:id="id" prefWidth="180" text="ID" />
-				<TableColumn fx:id="name" prefWidth="300" text="Name" />
-				<TableColumn fx:id="phone" prefWidth="280" text="Phone" />
-				<TableColumn fx:id="address" prefWidth="400" text="Address" />
+				<TableColumn fx:id="id" prefWidth="180" text="Mã Khách Hàng" />
+				<TableColumn fx:id="name" prefWidth="300" text="Tên Khách Hàng" />
+				<TableColumn fx:id="phone" prefWidth="280" text="Số Điện Thoại" />
+				<TableColumn fx:id="address" prefWidth="400" text="Địa chỉ" />
 			</columns>
 		</TableView>
      </center>
@@ -47,10 +47,10 @@
 		    <padding>
 		        <Insets bottom="10" left="30" right="30" top="10" />
 		    </padding>
-			<Button fx:id="searchButton" maxWidth="Infinity" onAction="#handleSearch" text="Search" HBox.hgrow="ALWAYS" />
-	        <Button fx:id="addButton" maxWidth="Infinity" onAction="#handleAdd" text="Add" HBox.hgrow="ALWAYS" />
-	        <Button fx:id="editButton" maxWidth="Infinity" onAction="#handleEdit" text="Edit" HBox.hgrow="ALWAYS" />
-	        <Button fx:id="deleteButton" maxWidth="Infinity" onAction="#handleDelete" text="Delete" HBox.hgrow="ALWAYS" />
+			<Button fx:id="searchButton" maxWidth="Infinity" onAction="#handleSearch" text="Tìm kiếm" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="addButton" maxWidth="Infinity" onAction="#handleAdd" text="Thêm" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="editButton" maxWidth="Infinity" onAction="#handleEdit" text="Sửa" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="deleteButton" maxWidth="Infinity" onAction="#handleDelete" text="Xóa" HBox.hgrow="ALWAYS" />
 		</HBox>
 	</bottom>
 </BorderPane>

@@ -58,3 +58,15 @@
 #loginLabel:hover {
     -fx-text-fill: #34495e;
 }
+
+.input-field {
+    -fx-font-size: 14px;
+    -fx-background-color: transparent; /* vì đã set trong FXML stack */
+}
+
+.toggle-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 0 5px;
+}
+

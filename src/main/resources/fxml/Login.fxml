@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.ProgressIndicator?>
 
-<StackPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to top, #74ebd5,#3366CC);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Login_Controller">
+<StackPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to top, #74ebd5,#3366CC);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Login_Controller" stylesheets="css/login.css">
     <children>
         <VBox alignment="CENTER" spacing="25.0" maxWidth="500">
             <children>
@@ -25,13 +25,37 @@
                         <Font name="System Bold" size="34.0" />
                     </font>
                 </Text>
-                <TextField fx:id="usernameField" maxWidth="400.0" promptText="Enter Username" style="-fx-background-color: #ffffffcc; -fx-background-radius: 10; -fx-padding: 10; -fx-font-size: 14px;" />
-                <PasswordField fx:id="passwordField" maxWidth="400.0" promptText="Enter Password" style="-fx-background-color: #ffffffcc; -fx-background-radius: 10; -fx-padding: 10; -fx-font-size: 14px;" />
-                <VBox alignment="CENTER" spacing="8.0" stylesheets="@/css/login.css">
+                <TextField fx:id="usernameField"
+		           maxWidth="400.0"
+		           prefHeight="50.0"
+		           promptText="Nhập tên người dùng"
+		           style="-fx-background-color: #ffffffcc;
+		                  -fx-background-radius: 10;
+		                  -fx-padding: 10;
+		                  -fx-font-size: 14px;" />
+                <StackPane maxWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffffffcc; -fx-padding: 10;">
+                    
+                    <PasswordField fx:id="passwordField"
+                                   promptText="Nhập mật khẩu"
+                                   styleClass="input-field"/>
+                   
+                    <TextField fx:id="visiblePasswordField"
+                               promptText="Nhập mật khẩu"
+                               styleClass="input-field"
+                               visible="false" managed="false"/>
+                    
+                    <Button fx:id="togglePasswordButton"
+                            onAction="#handleTogglePassword"
+                            text="👁"
+                            styleClass="toggle-btn"
+                            StackPane.alignment="CENTER_RIGHT"/>
+                </StackPane>
+                
+                <VBox alignment="CENTER" spacing="8.0">
                     <children>
-                        <Button fx:id="loginButton" text="Login" maxWidth="200.0" onAction="#handleLogin" style="-fx-text-fill: white; -fx-background-color: #1e90ff; -fx-background-radius: 10; -fx-font-size: 14px; -fx-padding: 8 20;" />
-                        <Text text="Or" style="-fx-fill: #363636; -fx-font-size: 12px;" />
-                        <Button fx:id="registerButton" text="Register" maxWidth="200.0" onAction="#handleRegister" style="-fx-text-fill: white; -fx-background-color: #32cd32; -fx-background-radius: 10; -fx-font-size: 14px; -fx-padding: 8 20;" />
+                        <Button fx:id="loginButton" text="Đăng Nhập" maxWidth="200.0" onAction="#handleLogin" styleClass="login-button"/>
+                        <Text text="Hoặc" style="-fx-fill: #363636; -fx-font-size: 12px; -fx-font-weight: bold;" />
+                        <Button fx:id="registerButton" text="Đăng Ký" maxWidth="200.0" onAction="#handleRegister" styleClass="register-button" />
                     </children>
                 </VBox>
             </children>

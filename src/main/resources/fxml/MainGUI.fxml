@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
 
 <VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main_Controller">
 
@@ -25,14 +27,28 @@
     <left>
 	    <AnchorPane prefWidth="120.0" BorderPane.alignment="CENTER">
 	        <children>
-	            <VBox alignment="TOP_CENTER" prefWidth="120.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+	            <VBox alignment="TOP_CENTER" prefWidth="120.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
 	                <children>
-	                    <Button mnemonicParsing="false" onAction="#loadItem" prefWidth="120.0" text="Items" />
-	                    <Button mnemonicParsing="false" onAction="#loadCustomer" prefWidth="120.0" text="Customers" />
-	                    <Button mnemonicParsing="false" prefWidth="120.0" text="Bill" />
-	                    <Button mnemonicParsing="false" onAction="#loadEmployee" prefWidth="120.0" text="Employee" />
-	                    <Button mnemonicParsing="false" onAction="#loadSupplier" prefWidth="120.0" text="Supplier" />
-	                    <Button mnemonicParsing="false" onAction="#loadWarehouse" prefWidth="120.0" text="Warehouse" />
+	                	 <HBox spacing="5" alignment="CENTER">
+			                <Button fx:id="backButton"
+			                        text="←"
+			                        prefWidth="30"
+			                        onAction="#handleBack" />
+			                <Button fx:id="homeButton"
+			                        text="🏠"
+			                        prefWidth="40"
+			                        onAction="#handleHome" />
+			                <Button fx:id="forwardButton"
+			                        text="→"
+			                        prefWidth="30"
+			                        onAction="#handleForward" />
+			            </HBox>
+	                    <Button mnemonicParsing="false" onAction="#loadItem" prefWidth="120.0" text="Hàng Hóa" />
+	                    <Button mnemonicParsing="false" onAction="#loadCustomer" prefWidth="120.0" text="Khách Hàng" />
+	                    <Button mnemonicParsing="false" prefWidth="120.0" text="Hóa Đơn" />
+	                    <Button mnemonicParsing="false" onAction="#loadEmployee" prefWidth="120.0" text="Nhân Viên" />
+	                    <Button mnemonicParsing="false" onAction="#loadSupplier" prefWidth="120.0" text="Nhà Cung Cấp" />
+	                    <Button mnemonicParsing="false" onAction="#loadWarehouse" prefWidth="120.0" text="Kho Hàng" />
 	                </children>
 	            </VBox>
 	        </children>

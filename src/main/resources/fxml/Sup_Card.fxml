@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="GUI.Sup_Card_Controller"
+            stylesheets="@/css/card.css">
+
+    <!-- Header -->
+    <top>
+         <HBox alignment="CENTER" spacing="10" >
+	    	<padding>
+		        <Insets bottom="10" left="0" right="0" top="10" />
+		    </padding>
+	        <ImageView fitHeight="40.0" fitWidth="45.0">
+	            <image>
+	                <Image url="@/img/Supplier.png" />
+	            </image>
+	        </ImageView>
+	        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quản Lý Nhà Cung Cấp" textAlignment="CENTER">
+	            <font>
+	                <Font name="System Bold" size="24.0" />
+	            </font>
+	        </Text>
+	    </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <FlowPane fx:id="cardContainer"
+                      hgap="20.0"
+                      vgap="20.0"
+                      prefWrapLength="800.0"
+                      style="-fx-background-color: #EEEEEE;" >
+                      <padding>
+				        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+				    </padding>
+               </FlowPane>
+        </ScrollPane>
+    </center>
+
+    <!-- Bottom Buttons -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="10">
+        	<padding>
+		        <Insets top="10.0" right="30.0" bottom="10.0" left="30.0" />
+		    </padding>
+            <Button fx:id="searchButton" text="Tìm kiếm" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+            <Button fx:id="addButton" text="Thêm" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+            <Button fx:id="editButton" text="Sửa" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+            <Button fx:id="deleteButton" text="Xóa" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+            <Button fx:id="refreshButton" text="Làm mới" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+        </HBox>
+    </bottom>
+</BorderPane>

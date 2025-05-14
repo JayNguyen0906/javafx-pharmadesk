@@ -58,7 +58,7 @@ public class Warehouse_Controller {
         deleteButton.setOnAction(event -> handleDelete());
         editButton.setOnAction(event -> handleEdit());
         searchButton.setOnAction(event -> handleSearch());
-        refreshButton.setOnAction(envent -> handleRefresh());
+        refreshButton.setOnAction(event -> handleRefresh());
     }
 
     private void loadWarehouseData() throws SQLException {
@@ -75,7 +75,7 @@ public class Warehouse_Controller {
 
     private boolean showConfirmation(String message) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
+        alert.setTitle("Xác nhận");
         alert.setHeaderText(null);
         alert.setContentText(message);
         return alert.showAndWait().filter(response -> response == ButtonType.OK).isPresent();
@@ -88,12 +88,12 @@ public class Warehouse_Controller {
             try {
                 if (warehouseBUS.addWarehouse(newWarehouse)) {
                     loadWarehouseData();
-                    showAlert("Warehouse added successfully!");
+                    showAlert("Thêm hàng hóa vào kho thành công!");
                 } else {
-                    showAlert("Failed to add warehouse (possibly duplicate)!");
+                    showAlert("Thêm thất bại (có thể đã tồn tại)!");
                 }
             } catch (SQLException e) {
-                showAlert("Error adding warehouse: " + e.getMessage());
+                showAlert("Lỗi khi thêm hàng hóa: " + e.getMessage());
             }
         });
     }
@@ -102,20 +102,20 @@ public class Warehouse_Controller {
     private void handleDelete() {
         Warehouse selected = tableView.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            if (showConfirmation("Are you sure you want to delete this warehouse item?")) {
+            if (showConfirmation("Bạn có chắc muốn xóa hàng hóa này khỏi kho?")) {
                 try {
                     if (warehouseBUS.deleteWarehouse(selected.getItemName())) {
                         loadWarehouseData();
-                        showAlert("Warehouse deleted successfully!");
+                        showAlert("Xóa hàng hóa thành công!");
                     } else {
-                        showAlert("Failed to delete warehouse.");
+                        showAlert("Xóa thất bại!");
                     }
                 } catch (SQLException e) {
-                    showAlert("Error deleting warehouse: " + e.getMessage());
+                    showAlert("Lỗi khi xóa hàng hóa: " + e.getMessage());
                 }
             }
         } else {
-            showAlert("Please select a warehouse item to delete.");
+            showAlert("Vui lòng chọn hàng hóa để xóa.");
         }
     }
 
@@ -123,7 +123,7 @@ public class Warehouse_Controller {
     private void handleEdit() {
         Warehouse selected = tableView.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Please select a warehouse item to edit.");
+            showAlert("Vui lòng chọn hàng hóa để chỉnh sửa.");
             return;
         }
 
@@ -132,12 +132,12 @@ public class Warehouse_Controller {
             try {
                 if (warehouseBUS.updateWarehouse(updatedWarehouse)) {
                     loadWarehouseData();
-                    showAlert("Warehouse updated successfully!");
+                    showAlert("Cập nhật hàng hóa thành công!");
                 } else {
-                    showAlert("Failed to update warehouse.");
+                    showAlert("Cập nhật thất bại.");
                 }
             } catch (SQLException e) {
-                showAlert("Error updating warehouse: " + e.getMessage());
+                showAlert("Lỗi khi cập nhật hàng hóa: " + e.getMessage());
             }
         });
     }
@@ -145,9 +145,9 @@ public class Warehouse_Controller {
     @FXML
     private void handleSearch() {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Search Warehouse");
-        dialog.setHeaderText("Search for a Warehouse Item");
-        dialog.setContentText("Enter item name or supplier name:");
+        dialog.setTitle("Tìm kiếm hàng hóa");
+        dialog.setHeaderText("Tìm kiếm theo tên hàng hoặc nhà cung cấp");
+        dialog.setContentText("Nhập từ khóa:");
 
         dialog.showAndWait().ifPresent(keyword -> {
             String lowerKeyword = keyword.trim().toLowerCase();
@@ -161,7 +161,7 @@ public class Warehouse_Controller {
             }
 
             if (filtered.isEmpty()) {
-                showAlert("No matching warehouse item found.");
+                showAlert("Không tìm thấy hàng hóa phù hợp.");
             } else {
                 tableView.setItems(filtered);
                 tableView.refresh();
@@ -170,21 +170,21 @@ public class Warehouse_Controller {
     }
 
     @FXML
-	private void handleRefresh() {
-		try {
-			loadWarehouseData();
-			showAlert("Warehouse list refreshed.");
-		} catch (SQLException e) {
-			showAlert("Failed to refresh warehouse list: " + e.getMessage());
-		}
-	}
-    
+    private void handleRefresh() {
+        try {
+            loadWarehouseData();
+            showAlert("Đã làm mới danh sách hàng hóa.");
+        } catch (SQLException e) {
+            showAlert("Lỗi khi làm mới danh sách: " + e.getMessage());
+        }
+    }
+
     private Dialog<Warehouse> createWarehouseDialog(Warehouse existing, boolean isEdit) {
         Dialog<Warehouse> dialog = new Dialog<>();
-        dialog.setTitle(isEdit ? "Edit Warehouse" : "Add Warehouse");
-        dialog.setHeaderText(isEdit ? "Edit warehouse information" : "Enter warehouse information");
+        dialog.setTitle(isEdit ? "Chỉnh sửa hàng hóa" : "Thêm hàng hóa");
+        dialog.setHeaderText(isEdit ? "Chỉnh sửa thông tin hàng hóa" : "Nhập thông tin hàng hóa");
 
-        ButtonType actionType = new ButtonType(isEdit ? "Save" : "Add", ButtonBar.ButtonData.OK_DONE);
+        ButtonType actionType = new ButtonType(isEdit ? "Lưu" : "Thêm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(actionType, ButtonType.CANCEL);
 
         TextField itemNameField = new TextField();
@@ -193,10 +193,10 @@ public class Warehouse_Controller {
         DatePicker expiryPicker = new DatePicker();
         TextField primeCostField = new TextField();
 
-        itemNameField.setPromptText("Item Name");
-        supplierField.setPromptText("Supplier Name");
-        quantityField.setPromptText("Quantity");
-        primeCostField.setPromptText("Prime Cost");
+        itemNameField.setPromptText("Tên hàng hóa");
+        supplierField.setPromptText("Nhà cung cấp");
+        quantityField.setPromptText("Số lượng");
+        primeCostField.setPromptText("Giá nhập");
 
         if (isEdit && existing != null) {
             itemNameField.setText(existing.getItemName());
@@ -210,11 +210,11 @@ public class Warehouse_Controller {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.addRow(0, new Label("Item Name:"), itemNameField);
-        grid.addRow(1, new Label("Supplier Name:"), supplierField);
-        grid.addRow(2, new Label("Quantity:"), quantityField);
-        grid.addRow(3, new Label("Expiry Date:"), expiryPicker);
-        grid.addRow(4, new Label("Prime Cost:"), primeCostField);
+        grid.addRow(0, new Label("Tên hàng hóa:"), itemNameField);
+        grid.addRow(1, new Label("Nhà cung cấp:"), supplierField);
+        grid.addRow(2, new Label("Số lượng:"), quantityField);
+        grid.addRow(3, new Label("Hạn sử dụng:"), expiryPicker);
+        grid.addRow(4, new Label("Giá nhập:"), primeCostField);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -228,13 +228,13 @@ public class Warehouse_Controller {
                     double primeCost = Double.parseDouble(primeCostField.getText().trim());
 
                     if (itemName.isEmpty() || supplier.isEmpty() || expiryDate == null) {
-                        showAlert("Please fill in all required fields!");
+                        showAlert("Vui lòng nhập đầy đủ thông tin!");
                         return null;
                     }
 
                     return new Warehouse(itemName, supplier, quantity, Date.valueOf(expiryDate), primeCost);
                 } catch (NumberFormatException e) {
-                    showAlert("Invalid number format!");
+                    showAlert("Định dạng số không hợp lệ!");
                     return null;
                 }
             }

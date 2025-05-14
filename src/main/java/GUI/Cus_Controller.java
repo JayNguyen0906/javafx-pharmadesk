@@ -39,75 +39,67 @@ public class Cus_Controller {
 	public void initialize() throws SQLException {
 		cusBUS = new Cus_BUS();
 
-		// Gán dữ liệu vào bảng
 		id.setCellValueFactory(new PropertyValueFactory<>("id_Cus"));
 		name.setCellValueFactory(new PropertyValueFactory<>("name_Cus"));
 		phone.setCellValueFactory(new PropertyValueFactory<>("phone_Cus"));
 		address.setCellValueFactory(new PropertyValueFactory<>("address_Cus"));
 
-		// Load data
 		loadCustomerData();
 
-		// Event handlers for buttons
 		addButton.setOnAction(event -> handleAdd());
 		deleteButton.setOnAction(event -> handleDelete());
 		editButton.setOnAction(event -> handleEdit());
 		searchButton.setOnAction(event -> handleSearch());
 	}
 
-	// Thêm khách hàng
 	@FXML
 	private void handleAdd() {
 		Dialog<Customer> dialog = createCustomerDialog(null, false);
 		dialog.showAndWait().ifPresent(newCustomer -> {
-			
 			if (newCustomer.getId_Cus().isEmpty() || newCustomer.getName_Cus().isEmpty() ||
-		            newCustomer.getPhone_Cus().isEmpty() || newCustomer.getAddress_Cus().isEmpty()) {
-		            showAlert("Please fill in all customer fields!");
-		            handleAdd();
-		            return;
-		        }
-			
-			
+				newCustomer.getPhone_Cus().isEmpty() || newCustomer.getAddress_Cus().isEmpty()) {
+				showAlert("Vui lòng nhập đầy đủ thông tin khách hàng!");
+				handleAdd();
+				return;
+			}
+
 			try {
 				if (cusBUS.addCustomer(newCustomer)) {
 					loadCustomerData();
-					showAlert("Customer added successfully!");
+					showAlert("Thêm khách hàng thành công!");
 				} else {
-					showAlert("Customer already exists or failed to add!");
+					showAlert("Khách hàng đã tồn tại hoặc thêm thất bại!");
 				}
 			} catch (SQLException e) {
-				showAlert("Database error while adding customer: " + e.getMessage());
+				showAlert("Lỗi cơ sở dữ liệu khi thêm khách hàng: " + e.getMessage());
 			}
 		});
 	}
 
-	// Xóa khách hàng
 	@FXML
 	private void handleDelete() {
 		Customer selected = tableView.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			if (showConfirmation("Are you sure you want to delete the selected customer?")) {
+			if (showConfirmation("Bạn có chắc muốn xóa khách hàng đã chọn không?")) {
 				try {
 					if (cusBUS.deleteCustomer(selected.getId_Cus())) {
 						loadCustomerData();
-						showAlert("Customer deleted successfully!");
+						showAlert("Xóa khách hàng thành công!");
 					}
 				} catch (SQLException e) {
-					showAlert("Database error while deleting customer: " + e.getMessage());
+					showAlert("Lỗi cơ sở dữ liệu khi xóa khách hàng: " + e.getMessage());
 				}
 			}
 		} else {
-			showAlert("Please select a customer to delete.");
+			showAlert("Vui lòng chọn khách hàng để xóa.");
 		}
 	}
 
-	// Sửa thông tin khách hàng
 	@FXML
 	private void handleEdit() {
 		Customer selected = tableView.getSelectionModel().getSelectedItem();
 		if (selected == null) {
-			showAlert("Please select a customer to edit.");
+			showAlert("Vui lòng chọn khách hàng để sửa.");
 			return;
 		}
 
@@ -116,23 +108,22 @@ public class Cus_Controller {
 			try {
 				if (cusBUS.updateCustomer(updatedCustomer)) {
 					loadCustomerData();
-					showAlert("Customer updated successfully!");
+					showAlert("Cập nhật thông tin khách hàng thành công!");
 				} else {
-					showAlert("Failed to update customer.");
+					showAlert("Cập nhật thông tin thất bại.");
 				}
 			} catch (SQLException e) {
-				showAlert("Database error while updating customer: " + e.getMessage());
+				showAlert("Lỗi cơ sở dữ liệu khi cập nhật khách hàng: " + e.getMessage());
 			}
 		});
 	}
 
-	// Tìm kiếm
 	@FXML
 	private void handleSearch() {
 		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Search Customer");
-		dialog.setHeaderText("Search for a customer");
-		dialog.setContentText("Enter ID, name, phone, or address:");
+		dialog.setTitle("Tìm kiếm khách hàng");
+		dialog.setHeaderText("Tìm kiếm khách hàng theo thông tin");
+		dialog.setContentText("Nhập ID, tên, số điện thoại hoặc địa chỉ:");
 
 		dialog.showAndWait().ifPresent(keyword -> {
 			String lowerKeyword = keyword.trim().toLowerCase();
@@ -148,7 +139,7 @@ public class Cus_Controller {
 			}
 
 			if (filtered.isEmpty()) {
-				showAlert("No matching customer found!");
+				showAlert("Không tìm thấy khách hàng phù hợp!");
 			} else {
 				tableView.setItems(filtered);
 				tableView.refresh();
@@ -156,13 +147,11 @@ public class Cus_Controller {
 		});
 	}
 
-	// Load customer data into table
 	private void loadCustomerData() throws SQLException {
 		customerList = FXCollections.observableArrayList(cusBUS.getAllCustomers());
 		tableView.setItems(customerList);
 	}
 
-	// Show information alert
 	private void showAlert(String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText(null);
@@ -170,23 +159,21 @@ public class Cus_Controller {
 		alert.showAndWait();
 	}
 
-	// Show confirmation alert (for delete operation)
 	private boolean showConfirmation(String message) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation");
+		alert.setTitle("Xác nhận");
 		alert.setHeaderText(null);
 		alert.setContentText(message);
 
 		return alert.showAndWait().filter(response -> response == ButtonType.OK).isPresent();
 	}
 
-	// Tạo dialog chung cho cả thêm và sửa
 	private Dialog<Customer> createCustomerDialog(Customer existing, boolean isEdit) {
 		Dialog<Customer> dialog = new Dialog<>();
-		dialog.setTitle(isEdit ? "Edit Customer" : "Add Customer");
-		dialog.setHeaderText(isEdit ? "Edit customer information" : "Enter customer information");
+		dialog.setTitle(isEdit ? "Sửa khách hàng" : "Thêm khách hàng");
+		dialog.setHeaderText(isEdit ? "Sửa thông tin khách hàng" : "Nhập thông tin khách hàng");
 
-		ButtonType actionType = new ButtonType(isEdit ? "Save" : "Add", ButtonBar.ButtonData.OK_DONE);
+		ButtonType actionType = new ButtonType(isEdit ? "Lưu" : "Thêm", ButtonBar.ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(actionType, ButtonType.CANCEL);
 
 		TextField idField = new TextField();
@@ -195,10 +182,10 @@ public class Cus_Controller {
 		TextField addressField = new TextField();
 
 		idField.setPromptText("ID");
-		nameField.setPromptText("Name");
-		phoneField.setPromptText("Phone");
-		addressField.setPromptText("Address");
-		
+		nameField.setPromptText("Tên");
+		phoneField.setPromptText("Số điện thoại");
+		addressField.setPromptText("Địa chỉ");
+
 		if (isEdit && existing != null) {
 			idField.setText(existing.getId_Cus());
 			nameField.setText(existing.getName_Cus());
@@ -211,20 +198,20 @@ public class Cus_Controller {
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.addRow(0, new Label("ID:"), idField);
-		grid.addRow(1, new Label("Name:"), nameField);
-		grid.addRow(2, new Label("Phone:"), phoneField);
-		grid.addRow(3, new Label("Address:"), addressField);
+		grid.addRow(1, new Label("Tên:"), nameField);
+		grid.addRow(2, new Label("Số điện thoại:"), phoneField);
+		grid.addRow(3, new Label("Địa chỉ:"), addressField);
 
 		dialog.getDialogPane().setContent(grid);
 
 		dialog.setResultConverter(button -> {
 			if (button == actionType) {
 				String phone = phoneField.getText().trim();
-				
+
 				if (!phone.matches("0\\d{9}")) {
-		            showAlert("Invalid phone number!");
-		            return null;
-		        }
+					showAlert("Số điện thoại không hợp lệ!");
+					return null;
+				}
 				return new Customer(idField.getText().trim(), nameField.getText().trim(), phoneField.getText().trim(),
 						addressField.getText().trim());
 			}

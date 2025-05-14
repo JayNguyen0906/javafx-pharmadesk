@@ -43,6 +43,28 @@ public class Login_Controller {
 
 	@FXML
 	private ProgressIndicator progressIndicator;
+	
+	@FXML private TextField visiblePasswordField;
+	@FXML private Button togglePasswordButton;
+
+	@FXML
+	private void handleTogglePassword(ActionEvent event) {
+	    if (visiblePasswordField.isVisible()) {
+	        passwordField.setText(visiblePasswordField.getText());
+	        visiblePasswordField.setVisible(false);
+	        visiblePasswordField.setManaged(false);
+	        passwordField.setVisible(true);
+	        passwordField.setManaged(true);
+	        togglePasswordButton.setText("👁");
+	    } else {
+	        visiblePasswordField.setText(passwordField.getText());
+	        visiblePasswordField.setVisible(true);
+	        visiblePasswordField.setManaged(true);
+	        passwordField.setVisible(false);
+	        passwordField.setManaged(false);
+	        togglePasswordButton.setText("🙈");
+	    }
+	}
 
 	@FXML
 	private void handleLogin(ActionEvent event) {
@@ -62,7 +84,7 @@ public class Login_Controller {
 				User_BUS userBUS = new User_BUS();
 				
 				if (user.isEmpty() || pass.isEmpty()) {
-					showAlert(Alert.AlertType.ERROR, "Error", "Please enter complete information!");
+					showAlert(Alert.AlertType.ERROR, "Lỗi!", "Vui lòng nhập đủ thông tin!");
 					return;
 				}
 
@@ -76,16 +98,16 @@ public class Login_Controller {
 		                
 						Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 						stage.setScene(mainScene);
-						stage.setTitle("Pharma DeskApp - Home");
+						stage.setTitle("Pharma DeskApp - Trang chủ");
 						stage.setMaximized(true);
 						stage.setResizable(true);
 						stage.show();
 					} catch (Exception e) {
 						e.printStackTrace();
-						showAlert(Alert.AlertType.ERROR, "Error", "Cannot open main interface!");
+						showAlert(Alert.AlertType.ERROR, "Lỗi!", "Không thể mở trang chủ!");
 					}
 				} else {
-					showAlert(Alert.AlertType.ERROR, "Incorrect account", "Incorrect account or password!");
+					showAlert(Alert.AlertType.ERROR, "Tải khoản không đúng!", "Tài khoản hoặc mật khẩu không đúng!");
 				}
 			});
 		}).start();
@@ -111,7 +133,7 @@ public class Login_Controller {
 
 					Stage stage = new Stage();
 					stage.setScene(registerScene);
-					stage.setTitle("Pharma DeskApp - Register");
+					stage.setTitle("Pharma DeskApp - Đăng ký");
 					stage.setMaximized(true);
 					stage.setResizable(true);
 					stage.show();

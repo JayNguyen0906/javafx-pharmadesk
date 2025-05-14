@@ -12,44 +12,44 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to bottom right, #74ebd5, #acb6e5);"
     xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Register_Controller"
-    stylesheets="@/css/register.css">
+    stylesheets="css/register.css">
 
     <children>
-        <GridPane hgap="10" vgap="30" style="-fx-padding: 30px;" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+        <GridPane hgap="5" vgap="30" style="-fx-padding: 10px;" AnchorPane.leftAnchor="100" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="150" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="100" />
                 <ColumnConstraints hgrow="ALWAYS" minWidth="150" />
             </columnConstraints>
 
             <children>
-                <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Sign Up" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #333;" text="ĐĂNG KÝ" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
 
-                <Label style="-fx-font-weight: bold;" text="Full Name:" GridPane.rowIndex="1" />
-                <TextField fx:id="fullNameField" prefWidth="280" promptText="Enter your full name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label style="-fx-font-weight: bold;" text="Họ và tên:" GridPane.rowIndex="1" />
+                <TextField fx:id="fullNameField" prefWidth="280" promptText="Nhập họ và tên của bạn" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                <Label style="-fx-font-weight: bold;" text="Email Address:" GridPane.rowIndex="2" />
-                <TextField fx:id="emailField" prefWidth="280" promptText="Enter your email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label style="-fx-font-weight: bold;" text="Địa chỉ email:" GridPane.rowIndex="2" />
+                <TextField fx:id="emailField" prefWidth="280" promptText="Nhập email của bạn" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                <Label style="-fx-font-weight: bold;" text="Phone Number:" GridPane.rowIndex="3" />
-                <TextField fx:id="phoneField" prefWidth="280" promptText="Enter your phone number" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label style="-fx-font-weight: bold;" text="Số điện thoại:" GridPane.rowIndex="3" />
+                <TextField fx:id="phoneField" prefWidth="280" promptText="Nhập số điện thoại của bạn" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                <Label style="-fx-font-weight: bold;" text="Gender:" GridPane.rowIndex="4" />
-                <ChoiceBox fx:id="genderChoiceBox" prefHeight="25.0" prefWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label style="-fx-font-weight: bold;" text="Giới tính:" GridPane.rowIndex="4" />
+                <ChoiceBox fx:id="genderChoiceBox" prefHeight="20.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                <Label style="-fx-font-weight: bold;" text="Current Address:" GridPane.rowIndex="5" />
-                <TextField fx:id="addressField" prefWidth="280" promptText="Enter your current address" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label style="-fx-font-weight: bold;" text="Địa chỉ hiện tại:" GridPane.rowIndex="5" />
+                <TextField fx:id="addressField" prefWidth="280" promptText="Nhập địa chỉ hiện tại của bạn" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                <Label style="-fx-font-weight: bold;" text="Username:" GridPane.rowIndex="6" />
-                <TextField fx:id="usernameField" prefWidth="280" promptText="Create a username" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Label style="-fx-font-weight: bold;" text="Tên người dùng:" GridPane.rowIndex="6" />
+                <TextField fx:id="usernameField" prefWidth="280" promptText="Tạo tên người dùng cho tài khoản" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-                <Label style="-fx-font-weight: bold;" text="Password:" GridPane.rowIndex="7" />
-                <PasswordField fx:id="passwordField" prefWidth="280" promptText="Create a password" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                <Label style="-fx-font-weight: bold;" text="Mật khẩu:" GridPane.rowIndex="7" />
+                <PasswordField fx:id="passwordField" prefWidth="280" promptText="Tạo mật khẩu cho tài khoản" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
                 <Button fx:id="registerButton" onAction="#handleRegisterClick"
                     style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px; -fx-padding: 10px 20px;"
                     text="Register" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
 
-                <Label text="Already have an account? Login"
+                <Label text="Bạn đã có tài khoản? Đăng nhập?"
                     onMouseClicked="#handleLoginClick"
                     style="-fx-text-fill: #555; -fx-font-size: 12px; -fx-underline: true; -fx-cursor: hand;"
                     GridPane.rowIndex="9" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
