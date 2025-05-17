@@ -37,15 +37,7 @@ public class Main_Controller {
 	}
 	@FXML
 	private void handleHome(ActionEvent e) {
-		try {
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Prescription.fxml"));
-	        Parent prescriptionView = loader.load();
-
-	        mainContent.getChildren().clear();
-	        mainContent.getChildren().add(prescriptionView);
-	    } catch (IOException e1) {
-	        e1.printStackTrace();
-	    }
+		loadPrescription();
 	}
 
 	@FXML private void handleForward(ActionEvent e) {
@@ -63,8 +55,26 @@ public class Main_Controller {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Prescription.fxml"));
 	        Parent prescriptionView = loader.load();
 
+
+	        Prescription_Controller controller = loader.getController();
+	        controller.setMainController(this);
+	           
 	        mainContent.getChildren().clear();
 	        mainContent.getChildren().add(prescriptionView);
+	        
+	        prescriptionView.getStylesheets().add(getClass().getResource("/css/mainGui.css").toExternalForm());
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void loadCreatePrescription() {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreatePrescription.fxml"));
+	        Parent createPrescriptionView = loader.load();
+	        
+	        mainContent.getChildren().clear();
+	        mainContent.getChildren().add(createPrescriptionView);
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }

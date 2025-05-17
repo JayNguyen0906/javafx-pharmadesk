@@ -10,7 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 
 
-<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main_Controller">
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main_Controller" 
+		stylesheets="/css/mainGui.css" >
 
 
 	    <AnchorPane BorderPane.alignment="CENTER">
@@ -25,7 +27,7 @@
 	    
 	<BorderPane VBox.vgrow="ALWAYS">
     <left>
-	    <AnchorPane prefWidth="120.0" BorderPane.alignment="CENTER">
+	    <AnchorPane styleClass="menu-box" prefWidth="120.0" BorderPane.alignment="CENTER">
 	        <children>
 	            <VBox alignment="TOP_CENTER" prefWidth="120.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
 	                <children>
@@ -43,7 +45,7 @@
 			                        prefWidth="30"
 			                        onAction="#handleForward" />
 			            </HBox>
-	                    <Button mnemonicParsing="false" onAction="#loadItem" prefWidth="120.0" text="Hàng Hóa" />
+	                    <Button mnemonicParsing="false" onAction="#loadItem" prefWidth="120.0" text="Danh Mục" />
 	                    <Button mnemonicParsing="false" onAction="#loadCustomer" prefWidth="120.0" text="Khách Hàng" />
 	                    <Button mnemonicParsing="false" prefWidth="120.0" text="Hóa Đơn" />
 	                    <Button mnemonicParsing="false" onAction="#loadEmployee" prefWidth="120.0" text="Nhân Viên" />

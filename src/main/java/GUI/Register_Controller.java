@@ -41,7 +41,7 @@ public class Register_Controller {
 
     @FXML
     public void initialize() {
-        genderChoiceBox.getItems().addAll("Male", "Female", "Other");
+        genderChoiceBox.getItems().addAll("Nam", "Nữ");
     }
 
     @FXML
@@ -56,17 +56,17 @@ public class Register_Controller {
 
         if (username.isEmpty() || password.isEmpty() || fullName.isEmpty() ||
             email.isEmpty() || phone.isEmpty() || gender == null || address.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Input Error", "Please fill in all required fields.");
+            showAlert(Alert.AlertType.ERROR, "Lỗi!", "Vui lòng nhập đầy đủ thông tin!");
             return;
         }
 
         User newUser = new User(0, username, password, fullName, email, phone, gender, address, "customer", true);
 
         if (userBUS.addUser(newUser)) {
-            showAlert(Alert.AlertType.INFORMATION, "Success", "Account registered successfully!");
+            showAlert(Alert.AlertType.INFORMATION, "Thành Công!", "Tài khoản đã được tạo!");
             switchToLogin();
         } else {
-            showAlert(Alert.AlertType.ERROR, "Registration Failed", "Username already exists or an error occurred.");
+            showAlert(Alert.AlertType.ERROR, "Đăng ký thất bại", "Username already exists or an error occurred.");
         }
     }
 

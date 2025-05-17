@@ -12,13 +12,19 @@
                  <Image url="@/img/KeDonThuoc.png" />
            </image>
     </ImageView>
-          <AnchorPane pickOnBounds="false">
+          <AnchorPane pickOnBounds="false" >
 		       <children>
-		           <Button fx:id="btnCreatePrescription" onAction="#handleCreatePrescription"
-		           style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: red;                                  
-		           -fx-background-radius: 20; -fx-border-color: red; -fx-border-width: 1;                                  
-		           -fx-border-radius: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);" 
-		           text="Kê đơn thuốc ngay" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+		           <Button fx:id="btnCreatePrescription" onAction="#handleCreatePrescription" 
+		           styleClass="button-create-prescription"    
+		           text="Kê đơn thuốc ngay" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+		           	<graphic>
+				        <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+				            <image>
+				                <Image url="@/img/dashb.png" />
+				            </image>
+				        </ImageView>
+				    </graphic>
+		           </Button>
 		       </children>
 		  </AnchorPane>			
 </StackPane>
