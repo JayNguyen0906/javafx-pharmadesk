@@ -1,30 +1,145 @@
 package DAO;
 
 import DTO.Bill;
-import DTO.Employee;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bill_DAO {
-    public List<Bill> getAllBill() throws SQLException {
-        List<Bill> bills = new ArrayList<>();
-        String sql = "Select * FROM employees";
-        try (Connection con = DB_CONECTION.getConnection();
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql);
-        ){
-            while (rs.next()){
-                Bill bill = new Bill();
 
+    private Connection conn;
+
+    public Bill_DAO() throws SQLException {
+        this.conn = DB_CONECTION.getConnection(); // Sử dụng kết nối từ DB_Connection
+    }
+
+    // Lấy tất cả các hóa đơn
+    public List<Bill> getAllBills() throws SQLException {
+        List<Bill> bills = new ArrayList<>();
+
+        String query = "SELECT * FROM Bill";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                String idBill = rs.getString("ID_Bill");
+                String idGood = rs.getString("ID_Good");
+                String idCus = rs.getString("ID_Cus");
+                int quantity = rs.getInt("Quantity");
+                double totalAmount = rs.getDouble("TotalAmount");
+
+                // Lấy OrderDate và chuyển đổi thành LocalDate
+                String orderDate = rs.getString("OrderDate");
+
+                String status = rs.getString("Status");
+
+                Bill bill = new Bill(idBill, idGood, idCus, quantity, totalAmount, orderDate, status);
                 bills.add(bill);
-                System.out.println(bill);
             }
         }
+
         return bills;
     }
+
+    // Lấy hóa đơn theo ID
+    public Bill getBillById(String id) {
+        String sql = "SELECT * FROM Bill WHERE ID_Bill = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Bill(
+                        rs.getString("ID_Bill"),
+                        rs.getString("ID_Good"),
+                        rs.getString("ID_Cus"),
+                        rs.getInt("Quantity"),
+                        rs.getDouble("TotalAmount"),
+                        rs.getString("OrderDate"),  // Chuyển đổi Date thành LocalDate
+                        rs.getString("Status")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    // Thêm hóa đơn mới vào cơ sở dữ liệu
+    public boolean insertOrUpdateBill(Bill bill) {
+        String checkSql = "SELECT COUNT(*) FROM Bill WHERE ID_Bill = ?";
+        String insertSql = "INSERT INTO Bill (ID_Bill, ID_Good, ID_Cus, Quantity, TotalAmount, OrderDate, Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String updateSql = "UPDATE Bill SET ID_Good = ?, ID_Cus = ?, Quantity = ?, TotalAmount = ?, OrderDate = ?, Status = ? WHERE ID_Bill = ?";
+
+        try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+            checkStmt.setString(1, bill.getID_Bill());
+            ResultSet rs = checkStmt.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                // UPDATE
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                    updateStmt.setString(1, bill.getID_Good());
+                    updateStmt.setString(2, bill.getID_Cus());
+                    updateStmt.setInt(3, bill.getQuantity());
+                    updateStmt.setDouble(4, bill.getTotalAmount());
+                    updateStmt.setString(5, bill.getOrderDate());
+                    updateStmt.setString(6, bill.getStatus());
+                    updateStmt.setString(7, bill.getID_Bill());
+                    return updateStmt.executeUpdate() > 0;
+                }
+            } else {
+                // INSERT
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                    insertStmt.setString(1, bill.getID_Bill());
+                    insertStmt.setString(2, bill.getID_Good());
+                    insertStmt.setString(3, bill.getID_Cus());
+                    insertStmt.setInt(4, bill.getQuantity());
+                    insertStmt.setDouble(5, bill.getTotalAmount());
+                    insertStmt.setString(6, bill.getOrderDate());
+                    insertStmt.setString(7, bill.getStatus());
+                    return insertStmt.executeUpdate() > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Cập nhật hóa đơn trong cơ sở dữ liệu
+    public boolean updateBill(Bill bill) throws SQLException {
+        String sql = "UPDATE Bill SET ID_Good = ?, ID_Cus = ?, Quantity = ?, TotalAmount = ?, OrderDate = ?, Status = ? WHERE ID_Bill = ?";
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, bill.getID_Good());
+            ps.setString(2, bill.getID_Cus());
+            ps.setInt(3, bill.getQuantity());
+            ps.setDouble(4, bill.getTotalAmount());
+            ps.setString(5, bill.getOrderDate());
+            ps.setString(6, bill.getStatus());
+            ps.setString(7, bill.getID_Bill());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Xóa hóa đơn khỏi cơ sở dữ liệu
+    public boolean deleteBill(String idBill) throws SQLException {
+        String sql = "DELETE FROM Bill WHERE ID_Bill = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, idBill);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+
 }

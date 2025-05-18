@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="GUI.BillList_Controller">
+    <top>
+        <Label text="DANH SÁCH HÓA ĐƠN" style="-fx-font-size: 20px; -fx-font-weight: bold;" BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+
+            <TableView fx:id="tableBills">
+                <columns>
+                    <TableColumn fx:id="colBillId" text="Mã hóa đơn"/>
+                    <TableColumn fx:id="colCustomerName" text="Khách hàng"/>
+                    <TableColumn fx:id="colDate" text="Ngày lập"/>
+                    <TableColumn fx:id="colTotal" text="Tổng tiền"/>
+                    <TableColumn fx:id="colDetail" text="Chi tiết"/>
+                    <TableColumn fx:id="colDelete" text="Xóa"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
