@@ -5,12 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import BUS.Sup_BUS;
@@ -47,11 +47,11 @@ public class Sup_Card_Controller {
         refreshButton.setOnAction(e -> handleRefresh());
         editButton.setOnAction(e -> {
             if (selectedSupplier != null) handleEdit(selectedSupplier);
-            else showAlert("Vui lòng chọn nhà cung cấp để sửa.");
+            else ShowDialog.showAlert("Vui lòng chọn nhà cung cấp để sửa.");
         });
         deleteButton.setOnAction(e -> {
             if (selectedSupplier != null) handleDelete(selectedSupplier);
-            else showAlert("Vui lòng chọn nhà cung cấp để xóa.");
+            else ShowDialog.showAlert("Vui lòng chọn nhà cung cấp để xóa.");
         });
     }
 
@@ -115,19 +115,19 @@ public class Sup_Card_Controller {
         dialog.showAndWait().ifPresent(newSupplier -> {
             if (newSupplier.getID_Sup().isEmpty() || newSupplier.getName_Sup().isEmpty()
                 || newSupplier.getPhone_Sup().isEmpty() || newSupplier.getEmail_Sup().isEmpty()) {
-                showAlert("Vui lòng nhập đầy đủ thông tin nhà cung cấp!");
+                ShowDialog.showAlert("Vui lòng nhập đầy đủ thông tin nhà cung cấp!");
                 return;
             }
 
             try {
                 if (supBUS.addSupplier(newSupplier)) {
                     loadSupplierData();
-                    showAlert("Thêm nhà cung cấp thành công!");
+                    ShowDialog.showAlert("Thêm nhà cung cấp thành công!");
                 } else {
-                    showAlert("Nhà cung cấp đã tồn tại hoặc thêm thất bại!");
+                    ShowDialog.showAlert("Nhà cung cấp đã tồn tại hoặc thêm thất bại!");
                 }
             } catch (SQLException e) {
-                showAlert("Lỗi cơ sở dữ liệu khi thêm: " + e.getMessage());
+                ShowDialog.showAlert("Lỗi cơ sở dữ liệu khi thêm: " + e.getMessage());
             }
         });
     }
@@ -138,25 +138,25 @@ public class Sup_Card_Controller {
             try {
                 if (supBUS.updateSupplier(updatedSupplier)) {
                     loadSupplierData();
-                    showAlert("Cập nhật nhà cung cấp thành công!");
+                    ShowDialog.showAlert("Cập nhật nhà cung cấp thành công!");
                 } else {
-                    showAlert("Cập nhật thất bại!");
+                    ShowDialog.showAlert("Cập nhật thất bại!");
                 }
             } catch (SQLException e) {
-                showAlert("Lỗi cơ sở dữ liệu khi cập nhật: " + e.getMessage());
+                ShowDialog.showAlert("Lỗi cơ sở dữ liệu khi cập nhật: " + e.getMessage());
             }
         });
     }
 
     private void handleDelete(Supplier supplier) {
-        if (showConfirmation("Bạn có chắc muốn xóa nhà cung cấp này không?")) {
+        if (ShowDialog.showConfirmation("Bạn có chắc muốn xóa nhà cung cấp này không?")) {
             try {
                 if (supBUS.deleteSupplier(supplier.getID_Sup())) {
                     loadSupplierData();
-                    showAlert("Xóa nhà cung cấp thành công!");
+                    ShowDialog.showAlert("Xóa nhà cung cấp thành công!");
                 }
             } catch (SQLException e) {
-                showAlert("Lỗi cơ sở dữ liệu khi xóa: " + e.getMessage());
+                ShowDialog.showAlert("Lỗi cơ sở dữ liệu khi xóa: " + e.getMessage());
             }
         }
     }
@@ -182,7 +182,7 @@ public class Sup_Card_Controller {
 
             cardContainer.getChildren().clear();
             if (filtered.isEmpty()) {
-                showAlert("Không tìm thấy nhà cung cấp phù hợp!");
+                ShowDialog.showAlert("Không tìm thấy nhà cung cấp phù hợp!");
             } else {
                 for (Supplier s : filtered) {
                     cardContainer.getChildren().add(createSupplierCard(s));
@@ -194,14 +194,19 @@ public class Sup_Card_Controller {
     private void handleRefresh() {
         try {
             loadSupplierData();
-            showAlert("Đã làm mới danh sách nhà cung cấp.");
+            ShowDialog.showAlert("Đã làm mới danh sách nhà cung cấp.");
         } catch (SQLException e) {
-            showAlert("Lỗi khi làm mới: " + e.getMessage());
+            ShowDialog.showAlert("Lỗi khi làm mới: " + e.getMessage());
         }
     }
 
     private Dialog<Supplier> createSupplierDialog(Supplier existing, boolean isEdit) {
         Dialog<Supplier> dialog = new Dialog<>();
+        
+        String iconPath = isEdit ? "/img/edit_icon.png" : "/img/add_icon.png";
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(new Image(getClass().getResource(iconPath).toExternalForm()));
+		
         dialog.setTitle(isEdit ? "Sửa nhà cung cấp" : "Thêm nhà cung cấp");
         dialog.setHeaderText(isEdit ? "Chỉnh sửa thông tin nhà cung cấp" : "Nhập thông tin nhà cung cấp");
 
@@ -212,6 +217,8 @@ public class Sup_Card_Controller {
         TextField nameField = new TextField();
         TextField phoneField = new TextField();
         TextField emailField = new TextField();
+        
+        idField.setPrefWidth(325);
 
         idField.setPromptText("Mã nhà cung cấp");
         nameField.setPromptText("Tên");
@@ -234,12 +241,14 @@ public class Sup_Card_Controller {
         grid.addRow(2, new Label("Số điện thoại:"), phoneField);
         grid.addRow(3, new Label("Email:"), emailField);
 
-        dialog.getDialogPane().setContent(grid);
+        grid.setPrefWidth(400);
+		dialog.getDialogPane().setContent(grid);
+		dialog.getDialogPane().setPrefWidth(450);
 
         dialog.setResultConverter(button -> {
             if (button == actionType) {
                 if (!phoneField.getText().matches("0\\d{9}")) {
-                    showAlert("Số điện thoại không hợp lệ (phải gồm 10 chữ số bắt đầu bằng 0)!");
+                    ShowDialog.showAlert("Số điện thoại không hợp lệ (phải gồm 10 chữ số bắt đầu bằng 0)!");
                     return null;
                 }
                 return new Supplier(idField.getText().trim(), nameField.getText().trim(),
@@ -251,19 +260,4 @@ public class Sup_Card_Controller {
         return dialog;
     }
 
-    private void showAlert(String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Thông báo");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private boolean showConfirmation(String message) {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Xác nhận");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        return alert.showAndWait().filter(r -> r == ButtonType.OK).isPresent();
-    }
 }

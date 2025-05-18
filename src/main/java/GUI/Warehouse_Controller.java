@@ -1,10 +1,11 @@
 package GUI;
 
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import BUS.Warehouse_BUS;
@@ -66,21 +67,6 @@ public class Warehouse_Controller {
         tableView.setItems(warehouseList);
     }
 
-    private void showAlert(String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private boolean showConfirmation(String message) {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Xác nhận");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        return alert.showAndWait().filter(response -> response == ButtonType.OK).isPresent();
-    }
-
     @FXML
     private void handleAdd() {
         Dialog<Warehouse> dialog = createWarehouseDialog(null, false);
@@ -88,12 +74,12 @@ public class Warehouse_Controller {
             try {
                 if (warehouseBUS.addWarehouse(newWarehouse)) {
                     loadWarehouseData();
-                    showAlert("Thêm hàng hóa vào kho thành công!");
+                    ShowDialog.showAlert("Thêm hàng hóa vào kho thành công!");
                 } else {
-                    showAlert("Thêm thất bại (có thể đã tồn tại)!");
+                    ShowDialog.showAlert("Thêm thất bại (có thể đã tồn tại)!");
                 }
             } catch (SQLException e) {
-                showAlert("Lỗi khi thêm hàng hóa: " + e.getMessage());
+                ShowDialog.showAlert("Lỗi khi thêm hàng hóa: " + e.getMessage());
             }
         });
     }
@@ -102,20 +88,20 @@ public class Warehouse_Controller {
     private void handleDelete() {
         Warehouse selected = tableView.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            if (showConfirmation("Bạn có chắc muốn xóa hàng hóa này khỏi kho?")) {
+            if (ShowDialog.showConfirmation("Bạn có chắc muốn xóa hàng hóa này khỏi kho?")) {
                 try {
                     if (warehouseBUS.deleteWarehouse(selected.getItemName())) {
                         loadWarehouseData();
-                        showAlert("Xóa hàng hóa thành công!");
+                        ShowDialog.showAlert("Xóa hàng hóa thành công!");
                     } else {
-                        showAlert("Xóa thất bại!");
+                        ShowDialog.showAlert("Xóa thất bại!");
                     }
                 } catch (SQLException e) {
-                    showAlert("Lỗi khi xóa hàng hóa: " + e.getMessage());
+                    ShowDialog.showAlert("Lỗi khi xóa hàng hóa: " + e.getMessage());
                 }
             }
         } else {
-            showAlert("Vui lòng chọn hàng hóa để xóa.");
+            ShowDialog.showAlert("Vui lòng chọn hàng hóa để xóa.");
         }
     }
 
@@ -123,7 +109,7 @@ public class Warehouse_Controller {
     private void handleEdit() {
         Warehouse selected = tableView.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Vui lòng chọn hàng hóa để chỉnh sửa.");
+            ShowDialog.showAlert("Vui lòng chọn hàng hóa để chỉnh sửa.");
             return;
         }
 
@@ -132,12 +118,12 @@ public class Warehouse_Controller {
             try {
                 if (warehouseBUS.updateWarehouse(updatedWarehouse)) {
                     loadWarehouseData();
-                    showAlert("Cập nhật hàng hóa thành công!");
+                    ShowDialog.showAlert("Cập nhật hàng hóa thành công!");
                 } else {
-                    showAlert("Cập nhật thất bại.");
+                    ShowDialog.showAlert("Cập nhật thất bại.");
                 }
             } catch (SQLException e) {
-                showAlert("Lỗi khi cập nhật hàng hóa: " + e.getMessage());
+                ShowDialog.showAlert("Lỗi khi cập nhật hàng hóa: " + e.getMessage());
             }
         });
     }
@@ -161,7 +147,7 @@ public class Warehouse_Controller {
             }
 
             if (filtered.isEmpty()) {
-                showAlert("Không tìm thấy hàng hóa phù hợp.");
+                ShowDialog.showAlert("Không tìm thấy hàng hóa phù hợp.");
             } else {
                 tableView.setItems(filtered);
                 tableView.refresh();
@@ -173,14 +159,19 @@ public class Warehouse_Controller {
     private void handleRefresh() {
         try {
             loadWarehouseData();
-            showAlert("Đã làm mới danh sách hàng hóa.");
+            ShowDialog.showAlert("Đã làm mới danh sách hàng hóa.");
         } catch (SQLException e) {
-            showAlert("Lỗi khi làm mới danh sách: " + e.getMessage());
+            ShowDialog.showAlert("Lỗi khi làm mới danh sách: " + e.getMessage());
         }
     }
 
     private Dialog<Warehouse> createWarehouseDialog(Warehouse existing, boolean isEdit) {
         Dialog<Warehouse> dialog = new Dialog<>();
+        
+        String iconPath = isEdit ? "/img/edit_icon.png" : "/img/add_icon.png";
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(new Image(getClass().getResource(iconPath).toExternalForm()));
+		
         dialog.setTitle(isEdit ? "Chỉnh sửa hàng hóa" : "Thêm hàng hóa");
         dialog.setHeaderText(isEdit ? "Chỉnh sửa thông tin hàng hóa" : "Nhập thông tin hàng hóa");
 
@@ -192,6 +183,8 @@ public class Warehouse_Controller {
         TextField quantityField = new TextField();
         DatePicker expiryPicker = new DatePicker();
         TextField primeCostField = new TextField();
+        
+        itemNameField.setPrefWidth(325);
 
         itemNameField.setPromptText("Tên hàng hóa");
         supplierField.setPromptText("Nhà cung cấp");
@@ -216,7 +209,10 @@ public class Warehouse_Controller {
         grid.addRow(3, new Label("Hạn sử dụng:"), expiryPicker);
         grid.addRow(4, new Label("Giá nhập:"), primeCostField);
 
-        dialog.getDialogPane().setContent(grid);
+        grid.setPrefWidth(400);
+		dialog.getDialogPane().setContent(grid);
+		dialog.getDialogPane().setPrefWidth(450);
+
 
         dialog.setResultConverter(button -> {
             if (button == actionType) {
@@ -228,13 +224,13 @@ public class Warehouse_Controller {
                     double primeCost = Double.parseDouble(primeCostField.getText().trim());
 
                     if (itemName.isEmpty() || supplier.isEmpty() || expiryDate == null) {
-                        showAlert("Vui lòng nhập đầy đủ thông tin!");
+                        ShowDialog.showAlert("Vui lòng nhập đầy đủ thông tin!");
                         return null;
                     }
 
                     return new Warehouse(itemName, supplier, quantity, Date.valueOf(expiryDate), primeCost);
                 } catch (NumberFormatException e) {
-                    showAlert("Định dạng số không hợp lệ!");
+                    ShowDialog.showAlert("Định dạng số không hợp lệ!");
                     return null;
                 }
             }

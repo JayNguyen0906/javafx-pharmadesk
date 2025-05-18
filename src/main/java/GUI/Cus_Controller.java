@@ -1,10 +1,11 @@
 package GUI;
 
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import BUS.Cus_BUS;
@@ -29,6 +30,8 @@ public class Cus_Controller {
 	private Button deleteButton;
 	@FXML
 	private Button editButton;
+	@FXML
+	private Button refreshButton;
 	@FXML
 	private Button searchButton;
 
@@ -58,7 +61,7 @@ public class Cus_Controller {
 		dialog.showAndWait().ifPresent(newCustomer -> {
 			if (newCustomer.getId_Cus().isEmpty() || newCustomer.getName_Cus().isEmpty() ||
 				newCustomer.getPhone_Cus().isEmpty() || newCustomer.getAddress_Cus().isEmpty()) {
-				showAlert("Vui lòng nhập đầy đủ thông tin khách hàng!");
+				ShowDialog.showAlert("Vui lòng nhập đầy đủ thông tin khách hàng!");
 				handleAdd();
 				return;
 			}
@@ -66,12 +69,12 @@ public class Cus_Controller {
 			try {
 				if (cusBUS.addCustomer(newCustomer)) {
 					loadCustomerData();
-					showAlert("Thêm khách hàng thành công!");
+					ShowDialog.showAlert("Thêm khách hàng thành công!");
 				} else {
-					showAlert("Khách hàng đã tồn tại hoặc thêm thất bại!");
+					ShowDialog.showAlert("Khách hàng đã tồn tại hoặc thêm thất bại!");
 				}
 			} catch (SQLException e) {
-				showAlert("Lỗi cơ sở dữ liệu khi thêm khách hàng: " + e.getMessage());
+				ShowDialog.showAlert("Lỗi cơ sở dữ liệu khi thêm khách hàng: " + e.getMessage());
 			}
 		});
 	}
@@ -80,18 +83,18 @@ public class Cus_Controller {
 	private void handleDelete() {
 		Customer selected = tableView.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			if (showConfirmation("Bạn có chắc muốn xóa khách hàng đã chọn không?")) {
+			if (ShowDialog.showConfirmation("Bạn có chắc muốn xóa khách hàng đã chọn không?")) {
 				try {
 					if (cusBUS.deleteCustomer(selected.getId_Cus())) {
 						loadCustomerData();
-						showAlert("Xóa khách hàng thành công!");
+						ShowDialog.showAlert("Xóa khách hàng thành công!");
 					}
 				} catch (SQLException e) {
-					showAlert("Lỗi cơ sở dữ liệu khi xóa khách hàng: " + e.getMessage());
+					ShowDialog.showAlert("Lỗi cơ sở dữ liệu khi xóa khách hàng: " + e.getMessage());
 				}
 			}
 		} else {
-			showAlert("Vui lòng chọn khách hàng để xóa.");
+			ShowDialog.showAlert("Vui lòng chọn khách hàng để xóa.");
 		}
 	}
 
@@ -99,7 +102,7 @@ public class Cus_Controller {
 	private void handleEdit() {
 		Customer selected = tableView.getSelectionModel().getSelectedItem();
 		if (selected == null) {
-			showAlert("Vui lòng chọn khách hàng để sửa.");
+			ShowDialog.showAlert("Vui lòng chọn khách hàng để sửa.");
 			return;
 		}
 
@@ -108,12 +111,12 @@ public class Cus_Controller {
 			try {
 				if (cusBUS.updateCustomer(updatedCustomer)) {
 					loadCustomerData();
-					showAlert("Cập nhật thông tin khách hàng thành công!");
+					ShowDialog.showAlert("Cập nhật thông tin khách hàng thành công!");
 				} else {
-					showAlert("Cập nhật thông tin thất bại.");
+					ShowDialog.showAlert("Cập nhật thông tin thất bại.");
 				}
 			} catch (SQLException e) {
-				showAlert("Lỗi cơ sở dữ liệu khi cập nhật khách hàng: " + e.getMessage());
+				ShowDialog.showAlert("Lỗi cơ sở dữ liệu khi cập nhật khách hàng: " + e.getMessage());
 			}
 		});
 	}
@@ -139,12 +142,23 @@ public class Cus_Controller {
 			}
 
 			if (filtered.isEmpty()) {
-				showAlert("Không tìm thấy khách hàng phù hợp!");
+				ShowDialog.showAlert("Không tìm thấy khách hàng phù hợp!");
 			} else {
 				tableView.setItems(filtered);
 				tableView.refresh();
 			}
 		});
+	}
+	
+	@FXML 
+	private void handleRefresh() {
+		try {
+            loadCustomerData();
+            ShowDialog.showAlert("Đã làm mới danh sách khách hàng.");
+        } catch (SQLException e) {
+            ShowDialog.showAlert("Lỗi khi làm mới: " + e.getMessage());
+        }
+		
 	}
 
 	private void loadCustomerData() throws SQLException {
@@ -152,25 +166,17 @@ public class Cus_Controller {
 		tableView.setItems(customerList);
 	}
 
-	private void showAlert(String message) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setHeaderText(null);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
-
-	private boolean showConfirmation(String message) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Xác nhận");
-		alert.setHeaderText(null);
-		alert.setContentText(message);
-
-		return alert.showAndWait().filter(response -> response == ButtonType.OK).isPresent();
-	}
+	
 
 	private Dialog<Customer> createCustomerDialog(Customer existing, boolean isEdit) {
 		Dialog<Customer> dialog = new Dialog<>();
-		dialog.setTitle(isEdit ? "Sửa khách hàng" : "Thêm khách hàng");
+		
+		String iconPath = isEdit ? "/img/edit_icon.png" : "/img/add_icon.png";
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(new Image(getClass().getResource(iconPath).toExternalForm()));
+
+		dialog.setTitle((isEdit ? "Sửa khách hàng" : "Thêm khách hàng"));
+		
 		dialog.setHeaderText(isEdit ? "Sửa thông tin khách hàng" : "Nhập thông tin khách hàng");
 
 		ButtonType actionType = new ButtonType(isEdit ? "Lưu" : "Thêm", ButtonBar.ButtonData.OK_DONE);
@@ -180,6 +186,8 @@ public class Cus_Controller {
 		TextField nameField = new TextField();
 		TextField phoneField = new TextField();
 		TextField addressField = new TextField();
+		
+		idField.setPrefWidth(325);
 
 		idField.setPromptText("ID");
 		nameField.setPromptText("Tên");
@@ -202,14 +210,16 @@ public class Cus_Controller {
 		grid.addRow(2, new Label("Số điện thoại:"), phoneField);
 		grid.addRow(3, new Label("Địa chỉ:"), addressField);
 
+		grid.setPrefWidth(400);
 		dialog.getDialogPane().setContent(grid);
+		dialog.getDialogPane().setPrefWidth(450);
 
 		dialog.setResultConverter(button -> {
 			if (button == actionType) {
 				String phone = phoneField.getText().trim();
 
 				if (!phone.matches("0\\d{9}")) {
-					showAlert("Số điện thoại không hợp lệ!");
+					ShowDialog.showAlert("Số điện thoại không hợp lệ!");
 					return null;
 				}
 				return new Customer(idField.getText().trim(), nameField.getText().trim(), phoneField.getText().trim(),

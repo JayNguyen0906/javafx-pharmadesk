@@ -13,9 +13,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Warehouse_Controller">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Warehouse_Controller"
+			stylesheets="/css/title.css">
 	 <top>
-	    <HBox alignment="CENTER" spacing="10" >
+	    <HBox alignment="CENTER" spacing="10" styleClass="title-pane" >
 	    	<padding>
 		        <Insets bottom="10" left="0" right="0" top="10" />
 		    </padding>
@@ -24,7 +25,7 @@
 	                <Image url="@/img/pharmacy.png" />
 	            </image>
 	        </ImageView>
-	        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quản Lý Kho Hàng" textAlignment="CENTER">
+	        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quản Lý Kho Hàng" textAlignment="CENTER" styleClass="title-text">
 	            <font>
 	                <Font name="System Bold" size="24.0" />
 	            </font>
@@ -47,11 +48,11 @@
 		    <padding>
 		        <Insets bottom="10" left="30" right="30" top="10" />
 		    </padding>
-         	<Button fx:id="searchButton" maxWidth="Infinity" onAction="#handleSearch" text="Tìm kiếm" HBox.hgrow="ALWAYS" />
-	        <Button fx:id="addButton" maxWidth="Infinity" onAction="#handleAdd" text="Thêm" HBox.hgrow="ALWAYS" />
-	        <Button fx:id="editButton" maxWidth="Infinity" onAction="#handleEdit" text="Sửa" HBox.hgrow="ALWAYS" />
-	        <Button fx:id="deleteButton" maxWidth="Infinity" onAction="#handleDelete" text="Xóa" HBox.hgrow="ALWAYS" />
-	        <Button fx:id="refreshButton" maxWidth="Infinity" onAction="#handleRefresh" text="Làm mới" HBox.hgrow="ALWAYS" />
+         	<Button fx:id="searchButton" maxWidth="Infinity" onAction="#handleSearch" text="🔎 Tìm kiếm" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="addButton" maxWidth="Infinity" onAction="#handleAdd" text="➕ Thêm" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="editButton" maxWidth="Infinity" onAction="#handleEdit" text="🖋 Sửa" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="deleteButton" maxWidth="Infinity" onAction="#handleDelete" text="❌ Xóa" HBox.hgrow="ALWAYS" />
+	        <Button fx:id="refreshButton" maxWidth="Infinity" onAction="#handleRefresh" text="🔄 Làm mới" HBox.hgrow="ALWAYS" />
 	    </HBox>
 	</bottom>
 </BorderPane>

@@ -8,14 +8,12 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
-
+<?import javafx.scene.control.Separator?>
 
 
 <VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main_Controller" 
 		stylesheets="/css/mainGui.css" >
-
-
-	    <AnchorPane BorderPane.alignment="CENTER">
+	<AnchorPane BorderPane.alignment="CENTER" AnchorPane.bottomAnchor="2.0">
 	        <children>
 	            <ImageView fx:id="headerImage" pickOnBounds="true" preserveRatio="true" >
 	                <image>
@@ -23,26 +21,28 @@
 	                </image>
 	            </ImageView>
 	        </children>
-	    </AnchorPane>
+	</AnchorPane>
+
+	<Separator orientation="HORIZONTAL" />
 	    
 	<BorderPane VBox.vgrow="ALWAYS">
     <left>
-	    <AnchorPane styleClass="menu-box" prefWidth="120.0" BorderPane.alignment="CENTER">
+	    <AnchorPane styleClass="menu-box" prefWidth="125.0" BorderPane.alignment="CENTER">
 	        <children>
-	            <VBox alignment="TOP_CENTER" prefWidth="120.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
+	            <VBox alignment="TOP_CENTER" prefWidth="125.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
 	                <children>
 	                	 <HBox spacing="5" alignment="CENTER">
 			                <Button fx:id="backButton"
-			                        text="←"
-			                        prefWidth="30"
+			                        text="⬅"
+			                        prefWidth="40"
 			                        onAction="#handleBack" />
 			                <Button fx:id="homeButton"
 			                        text="🏠"
 			                        prefWidth="40"
 			                        onAction="#handleHome" />
 			                <Button fx:id="forwardButton"
-			                        text="→"
-			                        prefWidth="30"
+			                        text="➞"
+			                        prefWidth="40"
 			                        onAction="#handleForward" />
 			            </HBox>
 	                    <Button mnemonicParsing="false" onAction="#loadItem" prefWidth="120.0" text="Danh Mục" />
