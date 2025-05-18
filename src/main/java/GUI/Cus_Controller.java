@@ -128,6 +128,9 @@ public class Cus_Controller {
 		dialog.setHeaderText("Tìm kiếm khách hàng theo thông tin");
 		dialog.setContentText("Nhập ID, tên, số điện thoại hoặc địa chỉ:");
 
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+	    stage.getIcons().add(new Image(getClass().getResource("/img/search_icon.png").toExternalForm()));
+
 		dialog.showAndWait().ifPresent(keyword -> {
 			String lowerKeyword = keyword.trim().toLowerCase();
 			ObservableList<Customer> filtered = FXCollections.observableArrayList();

@@ -19,10 +19,10 @@ public class Item_DAO {
 
             while (rs.next()) {
                 Item Item = new Item();
-                Item.setId(rs.getString("id"));
-                Item.setName(rs.getString("name"));
-                Item.setPrice(rs.getDouble("price"));
-                Item.setQuantity(rs.getString("quantity"));
+                Item.setId(rs.getString("Items_ID"));
+                Item.setName(rs.getString("Items_Name"));
+                Item.setPrice(rs.getDouble("Prices"));
+                Item.setClassification(rs.getString("Classifications"));
                 Items.add(Item);
             }
         }
@@ -31,15 +31,15 @@ public class Item_DAO {
 
     // Thêm sản phẩm mới
     public boolean addItem(Item Item) throws SQLException {
-        String sql = "INSERT INTO Items (id, name, price, quantity) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Items (Items_ID, Items_Name, Classifications, Prices) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DB_CONECTION.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, Item.getId());
             stmt.setString(2, Item.getName());
-            stmt.setDouble(3, Item.getPrice());
-            stmt.setString(4, Item.getQuantity());
+            stmt.setString(3, Item.getClassification());
+            stmt.setDouble(4, Item.getPrice());
 
             int rowsInserted = stmt.executeUpdate();
             return rowsInserted > 0;
@@ -48,7 +48,7 @@ public class Item_DAO {
 
     // Xóa sản phẩm theo ID
     public boolean deleteItem(String id) throws SQLException {
-        String sql = "DELETE FROM Items WHERE id = ?";
+        String sql = "DELETE FROM Items WHERE Items_ID = ?";
 
         try (Connection conn = DB_CONECTION.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -61,14 +61,14 @@ public class Item_DAO {
 
     // Cập nhật thông tin sản phẩm
     public boolean updateItem(Item Item) throws SQLException {
-        String sql = "UPDATE Items SET name = ?, price = ?, quantity = ? WHERE id = ?";
+        String sql = "UPDATE Items SET Items_Name = ?, Classifications = ?, Prices = ? WHERE Items_ID = ?";
 
         try (Connection conn = DB_CONECTION.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, Item.getName());
-            stmt.setDouble(2, Item.getPrice());
-            stmt.setString(3, Item.getQuantity());
+            stmt.setString(2, Item.getClassification());
+            stmt.setDouble(3, Item.getPrice());
             stmt.setString(4, Item.getId());
 
             int rowsUpdated = stmt.executeUpdate();

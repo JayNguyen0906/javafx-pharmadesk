@@ -22,7 +22,7 @@
 		    </padding>
 	        <ImageView fitHeight="40.0" fitWidth="35.0">
 	            <image>
-	                <Image url="@/img/pharmacy.png" />
+	                <Image url="@/img/warehouse.png" />
 	            </image>
 	        </ImageView>
 	        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quản Lý Kho Hàng" textAlignment="CENTER" styleClass="title-text">
@@ -33,12 +33,12 @@
 	    </HBox>
 	</top>
     <center>
-        <TableView fx:id="tableView" prefHeight="400" prefWidth="600">
+        <TableView fx:id="tableView" prefHeight="400" prefWidth="600" style="-fx-font-size: 15;">
             <columns>
                 <TableColumn fx:id="itemColumn" prefWidth="300" text="Tên Hàng Hóa" />
                 <TableColumn fx:id="supplierColumn" minWidth="0.0" prefWidth="300" text="Nhà Cung Cấp" />
-                <TableColumn fx:id="currentquantityColumn" prefWidth="150" text="Số Lượng Hiện Tại" />
-                <TableColumn fx:id="expiryColumn" minWidth="0.0" prefWidth="220" text="Ngày Hết Hạn" />
+                <TableColumn fx:id="currentquantityColumn" prefWidth="152" text="Số Lượng Hiện Tại" />
+                <TableColumn fx:id="expiryColumn" minWidth="0.0" prefWidth="200" text="Ngày Hết Hạn" />
                 <TableColumn fx:id="primecostColumn" minWidth="0.0" prefWidth="200" text="Giá Vốn" />
             </columns>
         </TableView>

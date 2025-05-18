@@ -53,7 +53,6 @@
         </ScrollPane>
     </center>
 
-    <!-- Bottom Buttons -->
     <bottom>
         <HBox alignment="CENTER" spacing="10">
         	<padding>

@@ -8,10 +8,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class Item_BUS {
+	
     public static Item_DAO Item_dao;
+    
     public Item_BUS() {
-        Item_dao = new Item_DAO(); // Khởi tạo DAO
+        Item_dao = new Item_DAO();
     }
+    
     public List<Item> getAllItem() throws SQLException {
 
         return Item_dao.getAllItem();

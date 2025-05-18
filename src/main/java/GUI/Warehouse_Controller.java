@@ -135,6 +135,9 @@ public class Warehouse_Controller {
         dialog.setHeaderText("Tìm kiếm theo tên hàng hoặc nhà cung cấp");
         dialog.setContentText("Nhập từ khóa:");
 
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource("/img/search_icon.png").toExternalForm()));
+        
         dialog.showAndWait().ifPresent(keyword -> {
             String lowerKeyword = keyword.trim().toLowerCase();
             ObservableList<Warehouse> filtered = FXCollections.observableArrayList();

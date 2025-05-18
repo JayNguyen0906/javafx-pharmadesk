@@ -166,6 +166,9 @@ public class Sup_Card_Controller {
         dialog.setTitle("Tìm kiếm nhà cung cấp");
         dialog.setHeaderText("Nhập thông tin để tìm kiếm");
         dialog.setContentText("Nhập ID, tên, số điện thoại hoặc email:");
+        
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource("/img/search_icon.png").toExternalForm()));
 
         dialog.showAndWait().ifPresent(keyword -> {
             String lowerKeyword = keyword.trim().toLowerCase();
