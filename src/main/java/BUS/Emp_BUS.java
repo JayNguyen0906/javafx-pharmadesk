@@ -20,4 +20,10 @@ public class Emp_BUS {
     public boolean addEmployee(Employee e) {
         return emp_dao.insert(e);
     }
+    public static boolean deleteEmployee(String idEmp) {
+        return Emp_DAO.deleteEmployee(idEmp);
+    }
+    public static boolean updateEmployee(Employee emp) {
+        return Emp_DAO.updateEmployee(emp);
+    }
 }
