@@ -65,7 +65,7 @@ public class Sup_Controller {
 		Dialog<Supplier> dialog = createSupplierDialog(null, false);
 		dialog.showAndWait().ifPresent(newSupplier -> {
 			
-			if (newSupplier.getID_Sup().isEmpty() || newSupplier.getName_Sup().isEmpty() ||
+			if (newSupplier.getName_Sup().isEmpty() ||
 		            newSupplier.getPhone_Sup().isEmpty() || newSupplier.getEmail_Sup().isEmpty()) {
 		            showAlert("Please fill in all Supplier fields!");
 		            handleAdd();
@@ -143,8 +143,7 @@ public class Sup_Controller {
 			ObservableList<Supplier> filtered = FXCollections.observableArrayList();
 
 			for (Supplier c : SupplierList) {
-				if (c.getID_Sup().toLowerCase().contains(lowerKeyword)
-						|| c.getName_Sup().toLowerCase().contains(lowerKeyword)
+				if ( c.getName_Sup().toLowerCase().contains(lowerKeyword)
 						|| c.getPhone_Sup().toLowerCase().contains(lowerKeyword)
 						|| c.getEmail_Sup().toLowerCase().contains(lowerKeyword)) {
 					filtered.add(c);
@@ -214,7 +213,7 @@ public class Sup_Controller {
 		emailField.setPromptText("Email");
 		
 		if (isEdit && existing != null) {
-			idField.setText(existing.getID_Sup());
+			idField.setText(String.valueOf(existing.getID_Sup()));
 			nameField.setText(existing.getName_Sup());
 			phoneField.setText(existing.getPhone_Sup());
 			emailField.setText(existing.getEmail_Sup());
@@ -239,7 +238,7 @@ public class Sup_Controller {
 		            showAlert("Invalid phone number!");
 		            return null;
 		        }
-				return new Supplier(idField.getText().trim(), nameField.getText().trim(), phoneField.getText().trim(),
+				return new Supplier(Integer.parseInt(idField.getText().trim()),  nameField.getText().trim(), phoneField.getText().trim(),
 						emailField.getText().trim());
 			}
 			return null;

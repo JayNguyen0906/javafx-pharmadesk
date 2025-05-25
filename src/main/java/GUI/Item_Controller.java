@@ -3,6 +3,7 @@ package GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -14,26 +15,12 @@ import DTO.Item;
 import java.sql.SQLException;
 
 public class Item_Controller {
-    @FXML
-    private TableView<Item> tableView;
-    @FXML
-    private TableColumn<Item, String> idColumn;
-    @FXML
-    private TableColumn<Item, String> nameColumn;
-    @FXML
-    private TableColumn<Item, Double> priceColumn;
-    @FXML
-    private TableColumn<Item, String> classificationColumn;
-    @FXML
-    private Button addButton;
-    @FXML
-    private Button deleteButton;
-    @FXML
-    private Button editButton;
-    @FXML
-    private Button searchButton;
-    @FXML
-    private Button refreshButton;
+    @FXML private TableView<Item> tableView;
+    @FXML private TableColumn<Item, String> idColumn;
+    @FXML private TableColumn<Item, String> nameColumn;
+    @FXML private TableColumn<Item, Double> priceColumn;
+    @FXML private TableColumn<Item, String> classificationColumn;
+    @FXML private Button addButton, deleteButton, editButton, searchButton, refreshButton;
 
     private Item_BUS itemBUS;
     private ObservableList<Item> itemList;
@@ -67,22 +54,22 @@ public class Item_Controller {
         dialog.showAndWait().ifPresent(newItem -> {
             try {
                 if (itemBUS.addItem(newItem)) {
-                    itemList.add(newItem);
-                    ShowDialog.  showAlert("Thêm sản phẩm thành công!");
+                    loadItemData();
+                    ShowDialog.showAlert("Thêm sản phẩm thành công!");
                 } else {
-                	ShowDialog.  showAlert("Sản phẩm đã tồn tại hoặc thêm thất bại!");
+                    ShowDialog.showAlert("Sản phẩm đã tồn tại hoặc thêm thất bại!");
                 }
             } catch (SQLException e) {
-            	ShowDialog. showAlert("Lỗi khi thêm sản phẩm: " + e.getMessage());
+                ShowDialog.showAlert("Lỗi khi thêm sản phẩm: " + e.getMessage());
             }
         });
     }
-    
+
     @FXML
     private void handleEdit() {
         Item selected = tableView.getSelectionModel().getSelectedItem();
         if (selected == null) {
-        	ShowDialog. showAlert("Vui lòng chọn sản phẩm để sửa.");
+            ShowDialog.showAlert("Vui lòng chọn sản phẩm để sửa.");
             return;
         }
 
@@ -91,12 +78,12 @@ public class Item_Controller {
             try {
                 if (itemBUS.updateItem(updatedItem)) {
                     loadItemData();
-                    ShowDialog. showAlert("Cập nhật sản phẩm thành công!");
+                    ShowDialog.showAlert("Cập nhật sản phẩm thành công!");
                 } else {
-                	ShowDialog.showAlert("Cập nhật thất bại!");
+                    ShowDialog.showAlert("Cập nhật thất bại!");
                 }
             } catch (SQLException e) {
-            	ShowDialog. showAlert("Lỗi khi cập nhật sản phẩm: " + e.getMessage());
+                ShowDialog.showAlert("Lỗi khi cập nhật sản phẩm: " + e.getMessage());
             }
         });
     }
@@ -104,36 +91,32 @@ public class Item_Controller {
     @FXML
     private void handleDelete() {
         Item selected = tableView.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-            confirm.setTitle("Xác nhận");
-            confirm.setHeaderText("Bạn có chắc chắn muốn xóa sản phẩm?");
-            confirm.setContentText("ID: " + selected.getId());
+        if (selected == null) {
+            ShowDialog.showAlert("Vui lòng chọn sản phẩm để xóa.");
+            return;
+        }
 
-            confirm.showAndWait().ifPresent(result -> {
-                if (result == ButtonType.OK) {
-                    try {
-                        if (itemBUS.deleteItem(selected.getId())) {
-                            itemList.remove(selected);
-                            ShowDialog. showAlert("Xóa sản phẩm thành công!");
-                        }
-                    } catch (SQLException e) {
-                    	ShowDialog.showAlert("Lỗi khi xóa sản phẩm: " + e.getMessage());
-                    }
+        if (ShowDialog.showConfirmation("Bạn có chắc chắn muốn xóa sản phẩm có ID: " + selected.getId() + " không?")) {
+            try {
+                if (itemBUS.deleteItem(selected.getId())) {
+                    itemList.remove(selected);
+                    ShowDialog.showAlert("Xóa sản phẩm thành công!");
+                } else {
+                    ShowDialog.showAlert("Không thể xóa sản phẩm!");
                 }
-            });
-        } else {
-        	ShowDialog.showAlert("Vui lòng chọn sản phẩm để xóa.");
+            } catch (SQLException e) {
+                ShowDialog.showAlert("Lỗi khi xóa sản phẩm: " + e.getMessage());
+            }
         }
     }
-    
+
     @FXML
     private void handleSearch() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Tìm kiếm sản phẩm");
         dialog.setHeaderText("Tìm kiếm sản phẩm theo tên hoặc ID");
         dialog.setContentText("Nhập từ khóa:");
-        
+
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(getClass().getResource("/img/search_icon.png").toExternalForm()));
 
@@ -142,14 +125,14 @@ public class Item_Controller {
             ObservableList<Item> filtered = FXCollections.observableArrayList();
 
             for (Item item : itemList) {
-                if (item.getName().toLowerCase().contains(lowerKeyword)
-                        || item.getId().toLowerCase().contains(lowerKeyword)) {
+                if (item.getName().toLowerCase().contains(lowerKeyword) ||
+                    item.getId().toLowerCase().contains(lowerKeyword)) {
                     filtered.add(item);
                 }
             }
 
             if (filtered.isEmpty()) {
-            	ShowDialog.showAlert("Không tìm thấy sản phẩm phù hợp!");
+                ShowDialog.showAlert("Không tìm thấy sản phẩm phù hợp!");
             } else {
                 tableView.setItems(filtered);
                 tableView.refresh();
@@ -163,7 +146,7 @@ public class Item_Controller {
             loadItemData();
             ShowDialog.showAlert("Đã làm mới danh sách sản phẩm.");
         } catch (SQLException e) {
-        	ShowDialog.showAlert("Lỗi khi làm mới: " + e.getMessage());
+            ShowDialog.showAlert("Lỗi khi làm mới: " + e.getMessage());
         }
     }
 
@@ -182,63 +165,77 @@ public class Item_Controller {
         TextField idField = new TextField();
         TextField nameField = new TextField();
         TextField priceField = new TextField();
-        TextField classificationField = new TextField();
+        ComboBox<String> classificationBox = new ComboBox<>();
 
         idField.setPrefWidth(325);
-        
-        idField.setPromptText("ID");
         nameField.setPromptText("Tên");
         priceField.setPromptText("Giá");
-        classificationField.setPromptText("Phân loại");
-
-        if (isEdit && existing != null) {
-            idField.setText(existing.getId());
-            nameField.setText(existing.getName());
-            priceField.setText(String.valueOf(existing.getPrice()));
-            classificationField.setText(existing.getClassification());
-            idField.setEditable(false);
-        }
+        classificationBox.setPromptText("Chọn phân loại");
+        classificationBox.getItems().addAll(
+            "Thuốc kê đơn", "Thuốc không kê đơn", "Thực phẩm chức năng", "Dược mỹ phẩm",
+            "Thiết bị y tế", "Vật tư y tế tiêu hao", "Thuốc đông y / Thảo dược",
+            "Sản phẩm cho mẹ & bé", "Sản phẩm chăm sóc cá nhân", "Khác"
+        );
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.addRow(0, new Label("ID:"), idField);
-        grid.addRow(1, new Label("Tên:"), nameField);
-        grid.addRow(2, new Label("Giá:"), priceField);
-        grid.addRow(3, new Label("Phân loại:"), classificationField);
+        int rowIndex = 0;
+
+        if (isEdit && existing != null) {
+            idField.setText(existing.getId());
+            idField.setEditable(false);
+            grid.addRow(rowIndex++, new Label("ID:"), idField);
+            nameField.setText(existing.getName());
+            priceField.setText(String.valueOf(existing.getPrice()));
+            classificationBox.setValue(existing.getClassification());
+        }
+
+        grid.addRow(rowIndex++, new Label("Tên:"), nameField);
+        grid.addRow(rowIndex++, new Label("Giá:"), priceField);
+        grid.addRow(rowIndex, new Label("Phân loại:"), classificationBox);
+        classificationBox.setPrefWidth(325);
 
         grid.setPrefWidth(400);
-		dialog.getDialogPane().setContent(grid);
-		dialog.getDialogPane().setPrefWidth(450);
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().setPrefWidth(450);
+
+        Node okButton = dialog.getDialogPane().lookupButton(actionType);
+        okButton.addEventFilter(javafx.event.ActionEvent.ACTION, event -> {
+            String name = nameField.getText().trim();
+            String priceStr = priceField.getText().trim();
+            String classification = classificationBox.getValue();
+
+            if (name.isEmpty() || priceStr.isEmpty() || classification == null || classification.trim().isEmpty()) {
+                ShowDialog.showAlert("Vui lòng điền đầy đủ thông tin.");
+                event.consume();
+                return;
+            }
+
+            try {
+                double price = Double.parseDouble(priceStr);
+                if (price <= 0) {
+                    ShowDialog.showAlert("Giá phải lớn hơn 0.");
+                    event.consume();
+                }
+            } catch (NumberFormatException e) {
+                ShowDialog.showAlert("Giá không hợp lệ. Vui lòng nhập số.");
+                event.consume();
+            }
+        });
 
         dialog.setResultConverter(button -> {
             if (button == actionType) {
-                String id = idField.getText().trim();
-                String name = nameField.getText().trim();
-                String priceStr = priceField.getText().trim();
-                String classification = classificationField.getText().trim();
-
-                if (id.isEmpty() || name.isEmpty() || classification.isEmpty() || priceStr.isEmpty()) {
-                    ShowDialog.showAlert("Vui lòng điền đầy đủ thông tin.");
-                    return null;
-                }
-
-                try {
-                    double price = Double.parseDouble(priceStr);
-                    if (price <= 0) {
-                    	ShowDialog.showAlert("Giá phải lớn hơn 0.");
-                        return null;
-                    }
-                    return new Item(id, name, price, classification);
-                } catch (NumberFormatException e) {
-                	ShowDialog.showAlert("Giá không hợp lệ.");
-                    return null;
-                }
+                return new Item(
+                    isEdit ? idField.getText().trim() : null, 
+                    nameField.getText().trim(),
+                    Double.parseDouble(priceField.getText().trim()),
+                    classificationBox.getValue().trim()
+                );
             }
             return null;
         });
 
         return dialog;
     }
-
 }

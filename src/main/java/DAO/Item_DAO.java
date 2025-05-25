@@ -8,7 +8,6 @@ import DTO.Item;
 
 public class Item_DAO {
 
-    // Lấy toàn bộ danh sách sản phẩm
     public List<Item> getAllItem() throws SQLException {
         List<Item> Items = new ArrayList<>();
         String sql = "SELECT * FROM Items";
@@ -29,24 +28,32 @@ public class Item_DAO {
         return Items;
     }
 
-    // Thêm sản phẩm mới
     public boolean addItem(Item Item) throws SQLException {
-        String sql = "INSERT INTO Items (Items_ID, Items_Name, Classifications, Prices) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Items (Items_Name, Classifications, Prices) VALUES (?, ?, ?)";
 
         try (Connection conn = DB_CONECTION.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(1, Item.getId());
-            stmt.setString(2, Item.getName());
-            stmt.setString(3, Item.getClassification());
-            stmt.setDouble(4, Item.getPrice());
+            stmt.setString(1, Item.getName());
+            stmt.setString(2, Item.getClassification());
+            stmt.setDouble(3, Item.getPrice());
 
             int rowsInserted = stmt.executeUpdate();
-            return rowsInserted > 0;
+
+            if (rowsInserted > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        String generatedId = String.valueOf(generatedKeys.getLong(1));
+                        Item.setId(generatedId);
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
-    // Xóa sản phẩm theo ID
     public boolean deleteItem(String id) throws SQLException {
         String sql = "DELETE FROM Items WHERE Items_ID = ?";
 
@@ -59,7 +66,6 @@ public class Item_DAO {
         }
     }
 
-    // Cập nhật thông tin sản phẩm
     public boolean updateItem(Item Item) throws SQLException {
         String sql = "UPDATE Items SET Items_Name = ?, Classifications = ?, Prices = ? WHERE Items_ID = ?";
 
@@ -74,5 +80,23 @@ public class Item_DAO {
             int rowsUpdated = stmt.executeUpdate();
             return rowsUpdated > 0;
         }
+    }
+
+    public Item getItemById(String ID_Item) {
+        String query = "SELECT * FROM Items WHERE Items_ID = ?";
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, ID_Item);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Item(rs.getString("Items_ID"), rs.getString("Items_Name"), rs.getDouble("Prices"),
+                            rs.getString("Classifications"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

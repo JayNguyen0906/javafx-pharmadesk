@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<VBox xmlns="http://javafx.com/javafx"
-	  xmlns:fx="http://javafx.com/fxml"
-	  fx:controller="GUI.Emp_Controller"
-	  spacing="15" style="-fx-padding: 20; -fx-background-color: #f5f5f5;" prefHeight="600.0" prefWidth="820.0">
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<VBox prefHeight="600.0" prefWidth="820.0" spacing="15" style="-fx-padding: 20; -fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Emp_Controller">
+   <Button fx:id="Back" onAction="#handleBack" prefHeight="26.0" prefWidth="79.0" text="Quay lại" />
+	<!-- Nút hiển thị form nhập -->
+	<Button fx:id="btnShowForm" text="Thêm mới" onAction="#toggleFormVisibility" />
+	<VBox spacing="10">
+		<Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="🔍 Quản lý nhân viên" />
+		<HBox spacing="10">
+			<TextField fx:id="searchField" promptText="Tìm kiếm theo tên..." prefWidth="200"/>
+			<Button text="Tìm" onAction="#handleSearch"/>
+		</HBox>
+	</VBox>
 	<!-- FORM NHẬP NHÂN VIÊN MỚI -->
-	<VBox spacing="10" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #cccccc;">
-		<Label text="➕ Thêm nhân viên mới" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-		<TextField fx:id="idField" promptText="ID"/>
-		<TextField fx:id="nameField" promptText="Name"/>
-		<TextField fx:id="positionField" promptText="Position"/>
-		<TextField fx:id="emailField" promptText="Email"/>
-		<TextField fx:id="phoneField" promptText="Phone"/>
-		<TextField fx:id="cccdField" promptText="CCCD"/>
-		<Button text="Thêm nhân viên" onAction="#handleAddEmployee"/>
+	<VBox fx:id="formBox" spacing="10" visible="false" managed="false" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #cccccc;">
+		<Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="➕ Thêm nhân viên mới" />
+		<TextField fx:id="idField" promptText="ID" />
+		<TextField fx:id="nameField" promptText="Name" />
+		<TextField fx:id="positionField" promptText="Position" />
+		<TextField fx:id="emailField" promptText="Email" />
+		<TextField fx:id="phoneField" promptText="Phone" />
+		<TextField fx:id="cccdField" promptText="CCCD" />
+		<HBox spacing="10">
+			<Button fx:id="btnAdd" onAction="#handleAddEmployee" text="Thêm nhân viên" />
+			<Button fx:id="btnSave" onAction="#handleSaveEmployee" text="Lưu" visible="false" managed="false" />
+		</HBox>
 	</VBox>
 
 	<!-- DANH SÁCH NHÂN VIÊN -->
 	<ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
 		<content>
-			<VBox fx:id="employeeList" spacing="10"/>
+			<FlowPane fx:id="employeeList" hgap="10" vgap="10"  style="-fx-padding: 10;" />
 		</content>
 	</ScrollPane>
 

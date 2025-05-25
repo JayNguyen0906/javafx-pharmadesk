@@ -41,7 +41,6 @@ public class Sup_Card_Controller {
         supBUS = new Sup_BUS();
         loadSupplierData();
 
-        // Button actions
         addButton.setOnAction(e -> handleAdd());
         searchButton.setOnAction(e -> handleSearch());
         refreshButton.setOnAction(e -> handleRefresh());
@@ -84,19 +83,17 @@ public class Sup_Card_Controller {
 
         card.setOnMouseClicked(e -> {
             if (selectedSupplier != supplier) {
-                selectedSupplier = supplier; 
-                
+                selectedSupplier = supplier;
                 for (Node node : cardContainer.getChildren()) {
                     node.getStyleClass().remove("selected");
                 }
-
                 card.getStyleClass().add("selected");
             }
         });
 
         card.setOnMouseEntered(e -> {
             if (!card.getStyleClass().contains("selected")) {
-                card.getStyleClass().add("hover"); 
+                card.getStyleClass().add("hover");
             }
         });
 
@@ -109,13 +106,16 @@ public class Sup_Card_Controller {
         return card;
     }
 
-
     private void handleAdd() {
         Dialog<Supplier> dialog = createSupplierDialog(null, false);
         dialog.showAndWait().ifPresent(newSupplier -> {
-            if (newSupplier.getID_Sup().isEmpty() || newSupplier.getName_Sup().isEmpty()
-                || newSupplier.getPhone_Sup().isEmpty() || newSupplier.getEmail_Sup().isEmpty()) {
+            if (newSupplier.getName_Sup().isEmpty() || newSupplier.getPhone_Sup().isEmpty() || newSupplier.getEmail_Sup().isEmpty()) {
                 ShowDialog.showAlert("Vui lòng nhập đầy đủ thông tin nhà cung cấp!");
+                return;
+            }
+
+            if (!newSupplier.getPhone_Sup().matches("0\\d{9}")) {
+                ShowDialog.showAlert("Số điện thoại không hợp lệ (phải gồm 10 chữ số bắt đầu bằng 0)!");
                 return;
             }
 
@@ -135,6 +135,16 @@ public class Sup_Card_Controller {
     private void handleEdit(Supplier supplier) {
         Dialog<Supplier> dialog = createSupplierDialog(supplier, true);
         dialog.showAndWait().ifPresent(updatedSupplier -> {
+            if (updatedSupplier.getName_Sup().isEmpty() || updatedSupplier.getPhone_Sup().isEmpty() || updatedSupplier.getEmail_Sup().isEmpty()) {
+                ShowDialog.showAlert("Vui lòng nhập đầy đủ thông tin nhà cung cấp!");
+                return;
+            }
+
+            if (!updatedSupplier.getPhone_Sup().matches("0\\d{9}")) {
+                ShowDialog.showAlert("Số điện thoại không hợp lệ (phải gồm 10 chữ số bắt đầu bằng 0)!");
+                return;
+            }
+
             try {
                 if (supBUS.updateSupplier(updatedSupplier)) {
                     loadSupplierData();
@@ -166,7 +176,7 @@ public class Sup_Card_Controller {
         dialog.setTitle("Tìm kiếm nhà cung cấp");
         dialog.setHeaderText("Nhập thông tin để tìm kiếm");
         dialog.setContentText("Nhập ID, tên, số điện thoại hoặc email:");
-        
+
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(getClass().getResource("/img/search_icon.png").toExternalForm()));
 
@@ -175,7 +185,7 @@ public class Sup_Card_Controller {
             ObservableList<Supplier> filtered = FXCollections.observableArrayList();
 
             for (Supplier s : supplierList) {
-                if (s.getID_Sup().toLowerCase().contains(lowerKeyword)
+                if (String.valueOf(s.getID_Sup()).contains(lowerKeyword)
                     || s.getName_Sup().toLowerCase().contains(lowerKeyword)
                     || s.getPhone_Sup().toLowerCase().contains(lowerKeyword)
                     || s.getEmail_Sup().toLowerCase().contains(lowerKeyword)) {
@@ -205,11 +215,11 @@ public class Sup_Card_Controller {
 
     private Dialog<Supplier> createSupplierDialog(Supplier existing, boolean isEdit) {
         Dialog<Supplier> dialog = new Dialog<>();
-        
+
         String iconPath = isEdit ? "/img/edit_icon.png" : "/img/add_icon.png";
-		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(new Image(getClass().getResource(iconPath).toExternalForm()));
-		
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource(iconPath).toExternalForm()));
+
         dialog.setTitle(isEdit ? "Sửa nhà cung cấp" : "Thêm nhà cung cấp");
         dialog.setHeaderText(isEdit ? "Chỉnh sửa thông tin nhà cung cấp" : "Nhập thông tin nhà cung cấp");
 
@@ -220,8 +230,6 @@ public class Sup_Card_Controller {
         TextField nameField = new TextField();
         TextField phoneField = new TextField();
         TextField emailField = new TextField();
-        
-        idField.setPrefWidth(325);
 
         idField.setPromptText("Mã nhà cung cấp");
         nameField.setPromptText("Tên");
@@ -229,11 +237,14 @@ public class Sup_Card_Controller {
         emailField.setPromptText("Email");
 
         if (isEdit && existing != null) {
-            idField.setText(existing.getID_Sup());
+            idField.setText(String.valueOf(existing.getID_Sup()));
             nameField.setText(existing.getName_Sup());
             phoneField.setText(existing.getPhone_Sup());
             emailField.setText(existing.getEmail_Sup());
             idField.setEditable(false);
+        } else {
+            idField.setDisable(true);
+            idField.setVisible(false);
         }
 
         GridPane grid = new GridPane();
@@ -245,22 +256,43 @@ public class Sup_Card_Controller {
         grid.addRow(3, new Label("Email:"), emailField);
 
         grid.setPrefWidth(400);
-		dialog.getDialogPane().setContent(grid);
-		dialog.getDialogPane().setPrefWidth(450);
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().setPrefWidth(450);
+
+        Node okButton = dialog.getDialogPane().lookupButton(actionType);
+        okButton.addEventFilter(javafx.event.ActionEvent.ACTION, event -> {
+            String name = nameField.getText().trim();
+            String phone = phoneField.getText().trim();
+            String email = emailField.getText().trim();
+
+            if (name.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+                ShowDialog.showAlert("Vui lòng nhập đầy đủ thông tin!");
+                event.consume();
+                return;
+            }
+
+            if (!phone.matches("0\\d{9}")) {
+                ShowDialog.showAlert("Số điện thoại không hợp lệ (phải gồm 10 chữ số bắt đầu bằng 0)!");
+                event.consume();
+            }
+        });
 
         dialog.setResultConverter(button -> {
             if (button == actionType) {
-                if (!phoneField.getText().matches("0\\d{9}")) {
-                    ShowDialog.showAlert("Số điện thoại không hợp lệ (phải gồm 10 chữ số bắt đầu bằng 0)!");
-                    return null;
+                int id = 0;
+                if (isEdit) {
+                    try {
+                        id = Integer.parseInt(idField.getText().trim());
+                    } catch (NumberFormatException e) {
+                        ShowDialog.showAlert("ID không hợp lệ!");
+                        return null;
+                    }
                 }
-                return new Supplier(idField.getText().trim(), nameField.getText().trim(),
-                        phoneField.getText().trim(), emailField.getText().trim());
+                return new Supplier(id, nameField.getText().trim(), phoneField.getText().trim(), emailField.getText().trim());
             }
             return null;
         });
 
         return dialog;
     }
-
 }

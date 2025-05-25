@@ -58,6 +58,22 @@ public class User_DAO {
         return null;
     }
     
+    public String getFullName(String username) {
+    	String sql = "SELECT Full_Name FROM Users WHERE Username = ? ";
+    	try (Connection conn = DB_CONECTION.getConnection();
+    			PreparedStatement stmt = conn.prepareStatement(sql)) {
+    		stmt.setString(1, username);
+    		ResultSet rs = stmt.executeQuery();
+    		if (rs.next()) {
+    			return rs.getString("Full_Name");
+    		}
+    	} catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    		
+    }
+    
     public boolean updateUser(User user) {
         String sql = "UPDATE Users SET full_name=?, email=?, phone=?, gender=?, address=?, role=?, status=? WHERE id=?";
         try (Connection conn = DB_CONECTION.getConnection();

@@ -8,8 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
+import java.io.InputStream;
+
 import BUS.User_BUS;
 import javafx.scene.Node;
 import javafx.application.Platform;
@@ -92,7 +96,11 @@ public class Login_Controller {
 					try {
 						Parent mainView = FXMLLoader.load(getClass().getResource("/Fxml/MainGUI.fxml"));
 						Scene mainScene = new Scene(mainView);
-						
+
+						String fullName = userBUS.getFullName(user);
+						GetNameLogin.setLoggedInUsername(user);
+					    GetNameLogin.setLoggedInFullName(fullName);
+				        
 						Stage loginstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		                loginstage.close();
 		                
@@ -102,6 +110,7 @@ public class Login_Controller {
 						stage.setMaximized(true);
 						stage.setResizable(true);
 						stage.show();
+
 					} catch (Exception e) {
 						e.printStackTrace();
 						showAlert(Alert.AlertType.ERROR, "Lỗi!", "Không thể mở trang chủ!");
@@ -134,6 +143,11 @@ public class Login_Controller {
 					Stage stage = new Stage();
 					stage.setScene(registerScene);
 					stage.setTitle("Pharma DeskApp - Đăng ký");
+					
+					// Set icon
+					InputStream is = getClass().getResourceAsStream("/img/MainLogo.png");
+					stage.getIcons().add(new Image(is));
+					
 					stage.setMaximized(true);
 					stage.setResizable(true);
 					stage.show();

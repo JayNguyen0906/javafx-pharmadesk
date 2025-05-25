@@ -22,7 +22,7 @@ public class Sup_BUS {
 		    return supDAO.addSupplier(Supplier);
 		}
 
-		public boolean deleteSupplier(String id) throws SQLException {
+		public boolean deleteSupplier(int id) throws SQLException {
 		    return supDAO.deleteSupplier(id);
 		}
 
@@ -31,7 +31,7 @@ public class Sup_BUS {
 		}
 
 		
-		public Supplier getSupplierById(String Supplier_ID){
+		public Supplier getSupplierById(int Supplier_ID){
 	        return Sup_DAO.getSupplierById(Supplier_ID);
 	    }
 

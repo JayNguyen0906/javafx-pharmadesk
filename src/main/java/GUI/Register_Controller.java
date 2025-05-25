@@ -5,11 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import BUS.User_BUS;
 import DTO.User;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Register_Controller {
 
@@ -84,6 +86,9 @@ public class Register_Controller {
             stage.setTitle("Login");
             stage.setScene(new Scene(root));
 
+    		InputStream is = getClass().getResourceAsStream("/img/MainLogo.png");
+    		stage.getIcons().add(new Image(is));
+            
             stage.show();
             
             stage.setMaximized(true);

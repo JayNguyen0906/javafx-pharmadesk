@@ -28,6 +28,9 @@ public class User_BUS {
         return userDAO.findByUsername(username);
     }
 
+    public String getFullName (String username) {
+    	return userDAO.getFullName(username);
+    }
     public boolean updateUser(User user) {
         return userDAO.updateUser(user);
     }

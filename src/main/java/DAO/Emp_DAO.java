@@ -1,6 +1,7 @@
 package DAO;
 
 import DTO.Employee;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,62 @@ public class Emp_DAO {
             return stmt.executeUpdate() > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean recordAttendance(String empID) {
+        String checkSql = "SELECT COUNT(*) FROM Attendance WHERE emp_id = ? AND date = CURDATE()";
+        String insertSql = "INSERT INTO Attendance (emp_id, date) VALUES (?, CURDATE())";
+
+        try (Connection conn = DB_CONECTION.getConnection()) {
+
+            // 1. Kiểm tra xem đã chấm công chưa
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+                checkStmt.setString(1, empID);
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    return false; // Đã chấm công rồi
+                }
+            }
+
+            // 2. Chưa chấm thì chấm công
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                insertStmt.setString(1, empID);
+                insertStmt.executeUpdate();
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean deleteEmployee(String idEmp) {
+        String sql = "DELETE FROM employees WHERE ID = ?";
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, idEmp);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean updateEmployee(Employee emp) {
+        String sql = "UPDATE employees SET name=?, Position=?, Email=?, Phone=?, CCCD=? WHERE ID=?";
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, emp.getName_Emp());
+            stmt.setString(2, emp.getPosition_Emp());
+            stmt.setString(3, emp.getEmail_Emp());
+            stmt.setString(4, emp.getPhone_Emp());
+            stmt.setString(5, emp.getCCCD_Emp());
+            stmt.setString(6, emp.getID_Emp());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }

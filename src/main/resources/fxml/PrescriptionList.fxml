@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="GUI.PrescriptionList_Controller" prefWidth="900.0" prefHeight="600.0"
+	stylesheets="/css/title.css">
+    <children>
+        <VBox spacing="10" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="2" AnchorPane.rightAnchor="2" AnchorPane.bottomAnchor="2">
+            <padding>
+                <Insets top="0" right="5" bottom="5" left="5" />
+            </padding>
+            <HBox alignment="CENTER" spacing="10" styleClass="title-pane" >
+		    	<padding>
+			        <Insets bottom="10" left="0" right="0" top="10" />
+			    </padding>
+		        <ImageView fitHeight="40.0" fitWidth="45.0">
+		            <image>
+		                <Image url="@/img/dashb.png" />
+		            </image>
+		        </ImageView>
+		        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Danh Sách Đơn Thuốc Đã Tạo" textAlignment="CENTER" styleClass="title-text">
+		            <font>
+		                <Font name="System Bold" size="24.0" />
+		            </font>
+		        </Text>
+		    </HBox>
+
+            <!-- Bảng danh sách đơn thuốc -->
+            <TableView fx:id="tablePrescriptions" VBox.vgrow="ALWAYS" style="-fx-font-size: 15;">
+                <columns>
+                    <TableColumn fx:id="colId" text="Mã đơn" prefWidth="105" />
+                    <TableColumn fx:id="colName" text="Mã khách hàng" prefWidth="200" />
+                    <TableColumn fx:id="colDiagnosis" text="Chẩn đoán" prefWidth="350" />
+                    <TableColumn fx:id="colDate" text="Ngày tạo" prefWidth="200" />
+                    <TableColumn fx:id="colPrescriberName" text="Người kê đơn" prefWidth="280" />
+                </columns>
+            </TableView>
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+            	<Button onAction="#handleViewDetails" text="Xem chi tiết" />
+            	<Button onAction="#handleRefresh" text="Làm mới" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

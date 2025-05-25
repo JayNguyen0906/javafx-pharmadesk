@@ -7,10 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
@@ -22,15 +20,13 @@ public class Main_Controller {
 	@FXML
 	private StackPane mainContent;
 	
-	@FXML
-	private Button backButton;
+	@FXML 
+	private ChoiceBox<String> choiceOther;
 	
 	@FXML
-	private Button homeButton;
+	private Button backButton, homeButton, forwardButton;
 	
-	@FXML
-	private Button forwardButton;
-	
+	private boolean isInitializing = true;
 	
 	@FXML private void handleBack(ActionEvent e) {
 	    // TODO: quay về màn hình trước
@@ -48,6 +44,15 @@ public class Main_Controller {
 	@FXML
 	public void initialize() {
 		loadPrescription();
+		choiceOther.getItems().addAll(
+		        "Khác",
+		        "Đơn Thuốc Đã Tạo",
+		        "Chấm Công Nhân Viên",
+		        "Báo Cáo Doanh Thu"
+		    );
+		    choiceOther.setValue("Khác");
+
+		    isInitializing = false; // Cho phép xử lý sau khi khởi tạo xong
 	}
 
 	private void loadPrescription() {
@@ -80,7 +85,6 @@ public class Main_Controller {
 	    }
 	}
 	
-
 	@FXML
 	private void loadCustomer(ActionEvent event) {
 	    try {
@@ -92,6 +96,17 @@ public class Main_Controller {
 	    }
 	}
 
+	@FXML
+	private void loadBill(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Bill.fxml"));
+	        Parent root = loader.load();
+	        mainContent.getChildren().setAll(root);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	@FXML
 	private void loadEmployee(ActionEvent event) {
 	    try {
@@ -135,5 +150,48 @@ public class Main_Controller {
 	        e.printStackTrace();
 	    }
 	}
+	
+	@FXML
+	private void loadListPres(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PrescriptionList.fxml"));
+	        Parent root = loader.load();
+	        mainContent.getChildren().setAll(root);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	@FXML
+	private void loadOtherSelection(ActionEvent event) {
+	    if (isInitializing) return;
 
+	    String selected = (String) choiceOther.getValue();
+
+	    switch (selected) {
+	        case "Đơn Thuốc Đã Tạo":
+	            loadListPres(event);
+	            break;
+	        case "Chấm Công Nhân Viên":
+	            // loadAttendance();
+	            break;
+	        case "Báo Cáo Doanh Thu":
+	            // loadReport();
+	            break;
+	        default:
+	            break;
+	    }
+	}
+
+
+	@FXML
+	private void loadOther(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Supplier.fxml"));
+	        Parent root = loader.load();
+	        mainContent.getChildren().setAll(root);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 }

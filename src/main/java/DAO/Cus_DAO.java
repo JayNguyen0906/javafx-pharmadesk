@@ -1,10 +1,6 @@
 package DAO;
 
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,92 +8,150 @@ import DTO.Customer;
 
 public class Cus_DAO {
 
-	public List<Customer> getAllCustomer() throws SQLException {
-		List<Customer> cus_list = new ArrayList<>();
-		String query = "Select * from Customers";
+    public List<Customer> getAllCustomer() {
+        List<Customer> cusList = new ArrayList<>();
+        String query = "SELECT * FROM Customers";
 
-		try (Connection conn = DB_CONECTION.getConnection();
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(query)) {
-			while (rs.next()) {
-				Customer customer = new Customer(rs.getString("Customer_ID"), rs.getString("Name"),
-						rs.getString("Phone"), rs.getString("Address"));
-				cus_list.add(customer);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        try (Connection conn = DB_CONECTION.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
-		return cus_list;
-	}
+            while (rs.next()) {
+                Customer customer = new Customer(
+                        rs.getInt("Customer_ID"),
+                        rs.getString("Name"),
+                        rs.getInt("BirthYear"),
+                        rs.getString("Gender"),
+                        rs.getString("Phone"),
+                        rs.getString("Address"),
+                        rs.getString("HealthInsuranceNumber")
+                );
+                cusList.add(customer);
+            }
 
-	public boolean addCustomer(Customer customer) {
-		if (Cus_DAO.getCustomerById(customer.getId_Cus()) != null) {
-			return false;
-		} else {
-			String query = "INSERT INTO Customers (Customer_ID, Name, Phone, Address) VALUES (?, ?, ?, ?)";
-			try (Connection conn = DB_CONECTION.getConnection();
-					PreparedStatement pstmt = conn.prepareStatement(query)) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-				pstmt.setString(1, customer.getId_Cus());
-				pstmt.setString(2, customer.getName_Cus());
-				pstmt.setString(3, customer.getPhone_Cus());
-				pstmt.setString(4, customer.getAddress_Cus());
-				int rowsInserted = pstmt.executeUpdate();
-				return rowsInserted > 0;
+        return cusList;
+    }
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+    public int addCustomerGetID(Customer customer) {
+        String query = "INSERT INTO Customers (Name, BirthYear, Gender, Phone, Address, HealthInsuranceNumber) VALUES (?, ?, ?, ?, ?, ?)";
 
-		return false;
-	}
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-	public boolean updateCustomer(Customer customer) {
-		String query = "UPDATE Customers SET Name = ?, Phone = ?, Address =?  WHERE Customer_ID = ?";
-		try (Connection conn = DB_CONECTION.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, customer.getName_Cus());
-			pstmt.setString(2, customer.getPhone_Cus());
-			pstmt.setString(3, customer.getAddress_Cus());
-			pstmt.setString(4, customer.getId_Cus());
-			int rowsAffected = pstmt.executeUpdate();
-			return rowsAffected > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+            pstmt.setString(1, customer.getName_Cus());
+            pstmt.setInt(2, customer.getBirthYear());
+            pstmt.setString(3, customer.getGender());
+            pstmt.setString(4, customer.getPhone_Cus());
+            pstmt.setString(5, customer.getAddress_Cus());
+            pstmt.setString(6, customer.getHealthInsuranceNumber());
 
-	public boolean deleteCustomer(String Customer_ID) {
-		String query = "DELETE FROM Customers WHERE Customer_ID = ?";
-		try (Connection conn = DB_CONECTION.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // Trả về Customer_ID vừa được tạo
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
+    public boolean addCustomer(Customer customer) {
+        String query = "INSERT INTO Customers (Name, BirthYear, Gender, Phone, Address, HealthInsuranceNumber) VALUES (?, ?, ?, ?, ?, ?)";
 
-			pstmt.setString(1, Customer_ID);
-			int rowsDeleted = pstmt.executeUpdate();
-			return rowsDeleted > 0;
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+            pstmt.setString(1, customer.getName_Cus());
+            pstmt.setInt(2, customer.getBirthYear());
+            pstmt.setString(3, customer.getGender());
+            pstmt.setString(4, customer.getPhone_Cus());
+            pstmt.setString(5, customer.getAddress_Cus());
+            pstmt.setString(6, customer.getHealthInsuranceNumber());
 
-	public static Customer getCustomerById(String Customer_ID) {
-		String query = "SELECT * FROM Customers WHERE Customer_ID = ?";
-		try (Connection conn = DB_CONECTION.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
+            int rowsInserted = pstmt.executeUpdate();
+            return rowsInserted > 0;
 
-			pstmt.setString(1, Customer_ID);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					return new Customer(rs.getString("Customer_ID"), rs.getString("Name"), rs.getString("Phone"),
-							rs.getString("Address"));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return false;
+    }
+
+    public boolean updateCustomer(Customer customer) {
+        String query = "UPDATE Customers SET Name = ?, BirthYear = ?, Gender = ?, Phone = ?, Address = ?, HealthInsuranceNumber = ? WHERE Customer_ID = ?";
+
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, customer.getName_Cus());
+            pstmt.setInt(2, customer.getBirthYear());
+            pstmt.setString(3, customer.getGender());
+            pstmt.setString(4, customer.getPhone_Cus());
+            pstmt.setString(5, customer.getAddress_Cus());
+            pstmt.setString(6, customer.getHealthInsuranceNumber());
+            pstmt.setInt(7, customer.getId_Cus());
+
+            int rowsUpdated = pstmt.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean deleteCustomer(int customerID) {
+        String query = "DELETE FROM Customers WHERE Customer_ID = ?";
+
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, customerID);
+            int rowsDeleted = pstmt.executeUpdate();
+            return rowsDeleted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public Customer getCustomerById(int customerID) {
+        String query = "SELECT * FROM Customers WHERE Customer_ID = ?";
+
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, customerID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Customer(
+                            rs.getInt("Customer_ID"),
+                            rs.getString("Name"),
+                            rs.getInt("BirthYear"),
+                            rs.getString("Gender"),
+                            rs.getString("Phone"),
+                            rs.getString("Address"),
+                            rs.getString("HealthInsuranceNumber")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

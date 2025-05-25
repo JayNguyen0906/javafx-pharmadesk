@@ -9,7 +9,7 @@ public class DB_CONECTION {
 //    private static final String USER = "root";
 //    private static final String PASSWORD = "";
 	
-	private static final String DB_URL = "jdbc:sqlserver://localhost\\MSSQLSERVERHOA:1433;databaseName=PharmacyData;encrypt=true;trustServerCertificate=true;";
+	private static final String DB_URL = "jdbc:sqlserver://localhost\\MSSQLSERVERHOA:1433;databaseName=PharmaDeskAppData;encrypt=true;trustServerCertificate=true;";
 	private static final String USER = "sa";
 	private static final String PASSWORD = "123";
 	

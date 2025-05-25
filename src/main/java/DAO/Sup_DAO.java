@@ -7,16 +7,15 @@ import java.util.List;
 import DTO.Supplier;
 
 public class Sup_DAO {
-    public List<Supplier> getAllSup() throws SQLException{
+    public List<Supplier> getAllSup() throws SQLException {
         List<Supplier> supp_list = new ArrayList<>();
-        String sql = "Select * FROM supplier";
+        String sql = "SELECT * FROM Supplier";  // Chú ý tên bảng chính xác
         try (Connection con = DB_CONECTION.getConnection();
              Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql);
-             ){
-            while (rs.next()){
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
                 Supplier supplier = new Supplier();
-                supplier.setID_Sup(rs.getString("Supplier_ID"));
+                supplier.setID_Sup(rs.getInt("Supplier_ID"));  // int
                 supplier.setName_Sup(rs.getString("Supplier_Name"));
                 supplier.setPhone_Sup(rs.getString("Supplier_Phone"));
                 supplier.setEmail_Sup(rs.getString("Supplier_Email"));
@@ -25,73 +24,78 @@ public class Sup_DAO {
         }
         return supp_list;
     }
-    
+
     public boolean addSupplier(Supplier supplier) {
-    	String query = "INSERT INTO Supplier (Supplier_ID, Supplier_Name, Supplier_Phone, Supplier_Email) VALUES (?, ?, ?, ?)";
-    	try (Connection conn = DB_CONECTION.getConnection();
-    			PreparedStatement pstm = conn.prepareStatement(query)) {
-    				pstm.setString(1, supplier.getID_Sup());
-    				pstm.setString(2, supplier.getName_Sup());
-    				pstm.setString(3, supplier.getPhone_Sup());
-    				pstm.setString(4, supplier.getEmail_Sup());
-    				
-    				int rowsInserted = pstm.executeUpdate();
-    				return rowsInserted > 0;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	
-    return false;
+        String query = "INSERT INTO Supplier (Supplier_Name, Supplier_Phone, Supplier_Email) VALUES (?, ?, ?)";
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstm = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            pstm.setString(1, supplier.getName_Sup());
+            pstm.setString(2, supplier.getPhone_Sup());
+            pstm.setString(3, supplier.getEmail_Sup());
+
+            int rowsInserted = pstm.executeUpdate();
+            if (rowsInserted > 0) {
+                try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        supplier.setID_Sup(generatedKeys.getInt(1));  // Lấy ID tự sinh
+                    }
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    
+
     public boolean updateSupplier(Supplier supplier) {
-    	String query = "UPDATE Supplier SET Supplier_Name = ?, Supplier_Phone = ?, Supplier_Email = ? WHERE Supplier_ID = ?";
-    	try (Connection conn = DB_CONECTION.getConnection();
-    			PreparedStatement pstm = conn.prepareStatement(query)) {
-    				pstm.setString(1, supplier.getID_Sup());
-    				pstm.setString(2, supplier.getName_Sup());
-    				pstm.setString(3, supplier.getPhone_Sup());
-    				pstm.setString(4, supplier.getEmail_Sup());
-    				
-    				int rowsAffected = pstm.executeUpdate();
-    				return rowsAffected > 0;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	
-    return false;
+        String query = "UPDATE Supplier SET Supplier_Name = ?, Supplier_Phone = ?, Supplier_Email = ? WHERE Supplier_ID = ?";
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstm = conn.prepareStatement(query)) {
+            pstm.setString(1, supplier.getName_Sup());
+            pstm.setString(2, supplier.getPhone_Sup());
+            pstm.setString(3, supplier.getEmail_Sup());
+            pstm.setInt(4, supplier.getID_Sup());
+
+            int rowsAffected = pstm.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    
-    public boolean deleteSupplier(String Supplier_ID) {
-		String query = "DELETE FROM Supplier WHERE Supplier_ID = ?";
-		try (Connection conn = DB_CONECTION.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-			pstmt.setString(1, Supplier_ID);
-			int rowsDeleted = pstmt.executeUpdate();
-			return rowsDeleted > 0;
+    public boolean deleteSupplier(int supplier_ID) {
+        String query = "DELETE FROM Supplier WHERE Supplier_ID = ?";
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, supplier_ID);
+            int rowsDeleted = pstmt.executeUpdate();
+            return rowsDeleted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-    
-    public static Supplier getSupplierById(String Supplier_ID) {
-		String query = "SELECT * FROM Suppliers WHERE Supplier_ID = ?";
-		try (Connection conn = DB_CONECTION.getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-			pstmt.setString(1, Supplier_ID);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					return new Supplier(rs.getString("Supplier_ID"), rs.getString("Supplier_Name"), rs.getString("Supplier_Phone"),
-							rs.getString("Supplier_Email"));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-
+    public static Supplier getSupplierById(int supplier_ID) {
+        String query = "SELECT * FROM Supplier WHERE Supplier_ID = ?";
+        try (Connection conn = DB_CONECTION.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, supplier_ID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Supplier(
+                        rs.getInt("Supplier_ID"),
+                        rs.getString("Supplier_Name"),
+                        rs.getString("Supplier_Phone"),
+                        rs.getString("Supplier_Email")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

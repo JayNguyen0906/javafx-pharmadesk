@@ -14,7 +14,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Load file FXML
-		Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainGUI.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
 
 		// Set title và scene
 		primaryStage.setTitle("Pharma DeskApp - Đăng nhập");

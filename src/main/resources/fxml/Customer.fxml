@@ -36,10 +36,13 @@
 	<center>
 		<TableView fx:id="tableView" prefHeight="223.0" prefWidth="635.0" style="-fx-font-size: 15;">
 			<columns>
-				<TableColumn fx:id="id" prefWidth="170" text="Mã Khách Hàng" />
-				<TableColumn fx:id="name" prefWidth="300" text="Tên Khách Hàng" />
-				<TableColumn fx:id="phone" prefWidth="280" text="Số Điện Thoại" />
-				<TableColumn fx:id="address" prefWidth="400" text="Địa chỉ" />
+				<TableColumn fx:id="id" prefWidth="50" text="ID" />
+				<TableColumn fx:id="name" prefWidth="200" text="Tên Khách Hàng" />
+				<TableColumn fx:id="gender" prefWidth="100" text="Giới tính" />
+				<TableColumn fx:id="birth" prefWidth="100" text="Năm Sinh" />
+				<TableColumn fx:id="bhyt" prefWidth="250" text="Mã BHYT" />
+				<TableColumn fx:id="phone" prefWidth="150" text="Số Điện Thoại" />
+				<TableColumn fx:id="address" prefWidth="300" text="Địa chỉ" />
 			</columns>
 		</TableView>
      </center>

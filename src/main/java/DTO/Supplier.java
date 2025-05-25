@@ -1,7 +1,7 @@
 package DTO;
 
 public class Supplier {
-	private String ID_Sup;
+	private int ID_Sup;
 	private String Name_Sup;
 	private String Phone_Sup;
 	private String Email_Sup;
@@ -9,19 +9,19 @@ public class Supplier {
 	public Supplier() {
 	}
 
-	public Supplier(String iD_Sup, String name_Sup, String phone_Sup, String email_Sup) {
-		ID_Sup = iD_Sup;
+	public Supplier(int id_Sup, String name_Sup, String phone_Sup, String email_Sup) {
+		ID_Sup = id_Sup;
 		Name_Sup = name_Sup;
 		Phone_Sup = phone_Sup;
 		Email_Sup = email_Sup;
 	}
 
-	public String getID_Sup() {
+	public int getID_Sup() {
 		return ID_Sup;
 	}
 
-	public void setID_Sup(String iD_Sup) {
-		ID_Sup = iD_Sup;
+	public void setID_Sup(int id_Sup) {
+		ID_Sup = id_Sup;
 	}
 
 	public String getName_Sup() {

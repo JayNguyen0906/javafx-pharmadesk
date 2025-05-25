@@ -28,7 +28,7 @@
                     <Image url="@/img/item.png" />
                 </image>
             </ImageView>
-            <Text text="Quản Lý Mặt Hàng" styleClass="title-text">
+            <Text text="Quản Lý Danh Mục" styleClass="title-text">
                 <font>
                     <Font name="System Bold" size="24.0" />
                 </font>
@@ -39,8 +39,8 @@
     <center>
         <TableView fx:id="tableView" prefHeight="223.0" prefWidth="635.0" style="-fx-font-size: 15px;">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="120.0" text="ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="555.0" text="Tên Hàng" />
+                <TableColumn fx:id="idColumn" prefWidth="80.0" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="595.0" text="Tên Hàng" />
                 <TableColumn fx:id="priceColumn" prefWidth="177.0" text="Giá" />
                 <TableColumn fx:id="classificationColumn" prefWidth="300.0" text="Phân loại" />
             </columns>

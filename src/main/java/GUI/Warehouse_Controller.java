@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -170,11 +171,11 @@ public class Warehouse_Controller {
 
     private Dialog<Warehouse> createWarehouseDialog(Warehouse existing, boolean isEdit) {
         Dialog<Warehouse> dialog = new Dialog<>();
-        
+
         String iconPath = isEdit ? "/img/edit_icon.png" : "/img/add_icon.png";
-		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(new Image(getClass().getResource(iconPath).toExternalForm()));
-		
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource(iconPath).toExternalForm()));
+
         dialog.setTitle(isEdit ? "Chỉnh sửa hàng hóa" : "Thêm hàng hóa");
         dialog.setHeaderText(isEdit ? "Chỉnh sửa thông tin hàng hóa" : "Nhập thông tin hàng hóa");
 
@@ -186,9 +187,8 @@ public class Warehouse_Controller {
         TextField quantityField = new TextField();
         DatePicker expiryPicker = new DatePicker();
         TextField primeCostField = new TextField();
-        
-        itemNameField.setPrefWidth(325);
 
+        itemNameField.setPrefWidth(325);
         itemNameField.setPromptText("Tên hàng hóa");
         supplierField.setPromptText("Nhà cung cấp");
         quantityField.setPromptText("Số lượng");
@@ -213,29 +213,58 @@ public class Warehouse_Controller {
         grid.addRow(4, new Label("Giá nhập:"), primeCostField);
 
         grid.setPrefWidth(400);
-		dialog.getDialogPane().setContent(grid);
-		dialog.getDialogPane().setPrefWidth(450);
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().setPrefWidth(450);
 
+        Node okButton = dialog.getDialogPane().lookupButton(actionType);
+        okButton.addEventFilter(javafx.event.ActionEvent.ACTION, event -> {
+            String itemName = itemNameField.getText().trim();
+            String supplier = supplierField.getText().trim();
+            String quantityStr = quantityField.getText().trim();
+            String primeCostStr = primeCostField.getText().trim();
+            LocalDate expiryDate = expiryPicker.getValue();
+
+            if (itemName.isEmpty() || supplier.isEmpty() || quantityStr.isEmpty() ||
+                primeCostStr.isEmpty() || expiryDate == null) {
+                ShowDialog.showAlert("Vui lòng nhập đầy đủ thông tin!");
+                event.consume();
+                return;
+            }
+
+            try {
+                int quantity = Integer.parseInt(quantityStr);
+                if (quantity <= 0) {
+                    ShowDialog.showAlert("Số lượng phải lớn hơn 0.");
+                    event.consume();
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                ShowDialog.showAlert("Số lượng không hợp lệ. Vui lòng nhập số nguyên.");
+                event.consume();
+                return;
+            }
+
+            try {
+                double primeCost = Double.parseDouble(primeCostStr);
+                if (primeCost <= 0) {
+                    ShowDialog.showAlert("Giá nhập phải lớn hơn 0.");
+                    event.consume();
+                }
+            } catch (NumberFormatException e) {
+                ShowDialog.showAlert("Giá nhập không hợp lệ. Vui lòng nhập số.");
+                event.consume();
+            }
+        });
 
         dialog.setResultConverter(button -> {
             if (button == actionType) {
-                try {
-                    String itemName = itemNameField.getText().trim();
-                    String supplier = supplierField.getText().trim();
-                    int quantity = Integer.parseInt(quantityField.getText().trim());
-                    LocalDate expiryDate = expiryPicker.getValue();
-                    double primeCost = Double.parseDouble(primeCostField.getText().trim());
-
-                    if (itemName.isEmpty() || supplier.isEmpty() || expiryDate == null) {
-                        ShowDialog.showAlert("Vui lòng nhập đầy đủ thông tin!");
-                        return null;
-                    }
-
-                    return new Warehouse(itemName, supplier, quantity, Date.valueOf(expiryDate), primeCost);
-                } catch (NumberFormatException e) {
-                    ShowDialog.showAlert("Định dạng số không hợp lệ!");
-                    return null;
-                }
+                return new Warehouse(
+                    itemNameField.getText().trim(),
+                    supplierField.getText().trim(),
+                    Integer.parseInt(quantityField.getText().trim()),
+                    Date.valueOf(expiryPicker.getValue()),
+                    Double.parseDouble(primeCostField.getText().trim())
+                );
             }
             return null;
         });

@@ -1,6 +1,6 @@
 package DTO;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Bill {
 	private String ID_Bill;
@@ -8,13 +8,13 @@ public class Bill {
 	private String ID_Cus;
 	private int Quantity;
 	private double TotalAmount;
-	private Date OrderDate;
+	private LocalDate OrderDate;
 	private String Status;
 
 	public Bill() {
 	}
 
-	public Bill(String iD_Bill, String iD_Item, String iD_Cus, int quantity, double totalAmount, Date orderDate,
+	public Bill(String iD_Bill, String iD_Item, String iD_Cus, int quantity, double totalAmount, LocalDate orderDate,
 			String status) {
 		ID_Bill = iD_Bill;
 		ID_Item = iD_Item;
@@ -65,11 +65,11 @@ public class Bill {
 		TotalAmount = totalAmount;
 	}
 
-	public Date getOrderDate() {
+	public LocalDate getOrderDate() {
 		return OrderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(LocalDate orderDate) {
 		OrderDate = orderDate;
 	}
 

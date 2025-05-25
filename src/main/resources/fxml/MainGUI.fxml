@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -47,10 +48,11 @@
 			            </HBox>
 	                    <Button mnemonicParsing="false" onAction="#loadItem" prefWidth="120.0" text="Danh Mục" />
 	                    <Button mnemonicParsing="false" onAction="#loadCustomer" prefWidth="120.0" text="Khách Hàng" />
-	                    <Button mnemonicParsing="false" prefWidth="120.0" text="Hóa Đơn" />
 	                    <Button mnemonicParsing="false" onAction="#loadEmployee" prefWidth="120.0" text="Nhân Viên" />
 	                    <Button mnemonicParsing="false" onAction="#loadSupplier" prefWidth="120.0" text="Nhà Cung Cấp" />
 	                    <Button mnemonicParsing="false" onAction="#loadWarehouse" prefWidth="120.0" text="Kho Hàng" />
+	                    <Button mnemonicParsing="false" onAction="#loadBill" prefWidth="120.0" text="Hóa Đơn" />
+	                    <ChoiceBox fx:id="choiceOther" onAction="#loadOtherSelection" prefWidth="120.0" styleClass="choice-box" />
 	                </children>
 	            </VBox>
 	        </children>
@@ -58,7 +60,7 @@
 	</left>
 
     <center>
-        <StackPane fx:id="mainContent"  prefHeight="768.0" prefWidth="1336.0"> </StackPane>
+        <StackPane fx:id="mainContent"  prefHeight="768.0" prefWidth="1336.0" alignment="CENTER"> </StackPane>
     </center>
     </BorderPane>
 </VBox>
