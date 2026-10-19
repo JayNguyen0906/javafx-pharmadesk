@@ -1,0 +1,15 @@
+# IDE & System files
+.idea/
+.metadata/
+.settings/
+*.iml
+.classpath
+.project
+.DS_Store
+
+# Compiled output
+bin/
+*.class
+
+# PDF/Personal files
+*.pdf
