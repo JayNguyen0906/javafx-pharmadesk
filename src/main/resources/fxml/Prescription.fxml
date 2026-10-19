@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Prescription_Controller">
+	<ImageView fitHeight="575.0" fitWidth="1150.0" preserveRatio="false">
+           <image>
+                 <Image url="@/img/KeDonThuoc.png" />
+           </image>
+    </ImageView>
+          <AnchorPane pickOnBounds="false" >
+		       <children>
+		           <Button fx:id="btnCreatePrescription" onAction="#handleCreatePrescription" 
+		           styleClass="button-create-prescription"    
+		           text="Kê đơn thuốc ngay" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+		           	<graphic>
+				        <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+				            <image>
+				                <Image url="@/img/dashb.png" />
+				            </image>
+				        </ImageView>
+				    </graphic>
+		           </Button>
+		       </children>
+		  </AnchorPane>			
+</StackPane>
+

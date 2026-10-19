@@ -1,0 +1,14 @@
+
+.title-pane {
+    -fx-background-color: #87CEFF;          
+    -fx-background-radius: 0;              
+    -fx-padding: 10 20 10 20;                
+    -fx-alignment: center;                   
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 2, 2); 
+}
+
+.title-text {
+    -fx-fill: black;                           
+    -fx-font-size: 24px;                    
+    -fx-font-weight: bold;                   
+}

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Bill_Controller">
+
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="HÓA ĐƠN BÁN HÀNG">
+            <VBox.margin>
+               <Insets left="160.0" />
+            </VBox.margin></Label>
+
+            <GridPane hgap="10" vgap="10">
+                <Label text="Mã hóa đơn:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="txtBillId" prefHeight="25.0" prefWidth="353.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                
+                <Label text="Tên khách hàng:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="txtCustomerName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                
+				<Label text="Số điện thoại khách hàng:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="txtPhoneCustomer" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               
+                <Label text="Ngày lập:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="0" />
+            </padding>
+
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Danh sách sản phẩm" />
+
+            <!-- Bảng danh sách sản phẩm -->
+            <TableView fx:id="tableProducts" prefHeight="200" prefWidth="600">
+                <columns>
+                    <TableColumn fx:id="colProductId" prefWidth="48.0" text="Mã SP" />
+                    <TableColumn fx:id="colProductName" prefWidth="293.9999694824219" text="Tên SP" />
+                    <TableColumn fx:id="colQuantity" prefWidth="74.0" text="Số lượng" />
+                    <TableColumn fx:id="colUnitPrice" prefWidth="94.6666259765625" text="Đơn giá" />
+                    <TableColumn fx:id="colTotal" prefWidth="91.3333740234375" text="Thành tiền" />
+                </columns>
+            </TableView>
+
+            <!-- Phần nhập mã sản phẩm và số lượng -->
+            <GridPane hgap="10" prefHeight="96.0" prefWidth="343.0" vgap="10">
+                <Label text="Tên SP:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="txtProductName" minWidth="150" prefHeight="25.0" prefWidth="401.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label text="Số lượng:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="txtQuantity" prefHeight="25.0" prefWidth="196.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Button onAction="#handleAddProduct" text="Thêm sản phẩm" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox spacing="10">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="10" />
+            </padding>
+
+            <GridPane hgap="10" vgap="10">
+                <Label text="Tổng tiền:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="txtTotal" editable="false" prefHeight="25.0" prefWidth="201.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label text="Thuế (VAT %):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="txtTax" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label text="Thành tiền:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="txtGrandTotal" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+
+            <HBox alignment="CENTER_RIGHT" spacing="20">
+            	<Button fx:id="btnSave" onAction="#handlePrintBill" prefHeight="25.0" prefWidth="36.0" text="In" />
+                <Button fx:id="btnSave" onAction="#handleSave" text="Lưu" />
+                <Button fx:id="btnCancel" onAction="#handleCancel" text="Hủy" />
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

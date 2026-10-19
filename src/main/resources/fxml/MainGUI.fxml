@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+
+<VBox stylesheets="/css/mainGui.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main_Controller">
+	<AnchorPane AnchorPane.bottomAnchor="2.0" BorderPane.alignment="CENTER">
+	        <children>
+	            <ImageView fx:id="headerImage" pickOnBounds="true" preserveRatio="true">
+	                <image>
+	                    <Image url="@/img/Banner.png" />
+	                </image>
+	            </ImageView>
+	        </children>
+	</AnchorPane>
+
+	<Separator orientation="HORIZONTAL" />
+	    
+	<BorderPane VBox.vgrow="ALWAYS">
+    <left>
+	    <AnchorPane prefWidth="125.0" styleClass="menu-box" BorderPane.alignment="CENTER">
+	        <children>
+	            <VBox alignment="TOP_CENTER" prefWidth="125.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="3.0">
+	                <children>
+	                	 <HBox alignment="CENTER" spacing="5">
+			                <Button fx:id="backButton" onAction="#handleBack" prefWidth="40" text="⬅" />
+			                <Button fx:id="homeButton" onAction="#handleHome" prefWidth="40" text="🏠" />
+			                <Button fx:id="forwardButton" onAction="#handleForward" prefWidth="40" text="➞" />
+			            </HBox>
+	                    <Button mnemonicParsing="false" onAction="#loadBill" prefWidth="120.0" text="Hóa Đơn" />
+	                    <Button mnemonicParsing="false" onAction="#loadItem" prefWidth="120.0" text="Danh Mục" />
+	                    <Button mnemonicParsing="false" onAction="#loadCustomer" prefWidth="120.0" text="Khách Hàng" />
+	                    <Button mnemonicParsing="false" onAction="#loadEmployee" prefWidth="120.0" text="Nhân Viên" />
+	                    <Button mnemonicParsing="false" onAction="#loadSupplier" prefWidth="120.0" text="Nhà Cung Cấp" />
+	                    <Button mnemonicParsing="false" onAction="#loadWarehouse" prefWidth="120.0" text="Kho Hàng" />
+	                    <ChoiceBox fx:id="choiceOther" onAction="#loadOtherSelection" prefWidth="120.0" styleClass="choice-box" />
+	                      
+	                     <Region VBox.vgrow="ALWAYS"/>
+	                     
+	                     <Button text="Đăng xuất" onAction="#handleLogout" styleClass="button-logout">
+				            <graphic>
+				                <ImageView fitWidth="30" fitHeight="30" preserveRatio="true">
+				                    <image>
+				                        <Image url="@/img/check-out.png"/>
+				                    </image>
+				                </ImageView>
+				            </graphic>
+				        </Button>
+	                </children>
+	            </VBox>
+	        </children>
+	    </AnchorPane>
+	</left>
+
+    <center>
+        <StackPane fx:id="mainContent" alignment="CENTER" prefHeight="768.0" prefWidth="1336.0"> </StackPane>
+    </center>
+    </BorderPane>
+</VBox>

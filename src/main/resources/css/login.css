@@ -1,0 +1,37 @@
+.login-button {
+    -fx-text-fill: white;
+    -fx-background-color: #1e90ff;
+    -fx-background-radius: 10;
+    -fx-font-size: 14px;
+    -fx-padding: 8 20;
+    -fx-font-weight: bold;
+}
+
+.login-button:hover {
+    -fx-background-color: #5dade2;
+}
+.register-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+    -fx-padding: 8 20;
+    -fx-font-weight: bold;
+}
+.register-button:hover {
+    -fx-background-color: #58d68d;
+}
+.input-field {
+    -fx-font-size: 14px;
+    -fx-background-color: transparent; /* vì đã set trong FXML stack */
+}
+
+.toggle-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 0 8px;
+    -fx-font-size: 20px;      /* tăng cỡ chữ để emoji to hơn */
+    -fx-min-width: 10px;      /* đảm bảo đủ không gian */
+    -fx-min-height: 10px;
+}
+
